@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace ForestOfElves
 {
-    internal class Enemy
+    internal class CharacterManager
     {
-
+        
     }
 }

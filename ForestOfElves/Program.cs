@@ -10,6 +10,16 @@ namespace ForestOfElves
     {
         static void Main(string[] args)
         {
+            Map map = new Map();
+            Player player = new Player();
+
+            while (true)
+            {
+                map.MapDisplay();
+                player.PlayerA();
+            }
+            
         }
+        
     }
 }

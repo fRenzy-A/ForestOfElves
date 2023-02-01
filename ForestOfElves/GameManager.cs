@@ -8,5 +8,8 @@ namespace ForestOfElves
 {
     internal class GameManager
     {
+        
+
+
     }
 }
