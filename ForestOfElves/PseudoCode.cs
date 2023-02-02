@@ -9,7 +9,7 @@ namespace ForestOfElves
     internal class PseudoCode
     {
         /* referencing the map on Map()
-               take the x and y of map[,]
+               read the buffer and see if its equal to '^'
                     if map[x,y] coordinate = '^'
                         moveplayer = false
                     else

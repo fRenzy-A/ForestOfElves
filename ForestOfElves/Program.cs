@@ -12,11 +12,12 @@ namespace ForestOfElves
         {
             Map map = new Map();
             Player player = new Player();
-
             while (true)
             {
+                Console.WriteLine(map.WallChecker().ToString());
                 map.MapDisplay();
                 player.PlayerA();
+                player.PlayerUpdate(map.WallChecker());
             }
             
         }
