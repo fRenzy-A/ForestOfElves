@@ -8,12 +8,14 @@ namespace ForestOfElves
 {
     internal class Player
     {
-        static int x;
-        static int y;
+        static int futurex;
+        static int futurey;
 
+        static int currentx;
+        static int currenty;
         public void PlayerA()
         {
-            Position(x, y);
+            Position(currentx, currenty);
             PlayerUpdate();
         }
 
@@ -29,19 +31,19 @@ namespace ForestOfElves
             KeyInfo = Console.ReadKey(true);
             if (KeyInfo.Key == ConsoleKey.W)
             {
-                y--;
+                currenty--;
             }
             if (KeyInfo.Key == ConsoleKey.A)
             {
-                x--;
+                currentx--;
             }
             if (KeyInfo.Key == ConsoleKey.S)
             {
-                y++;
+                currenty++;
             }
             if (KeyInfo.Key == ConsoleKey.D)
             {
-                x++;
+                currentx++;
             }
             Console.Clear();
         }
