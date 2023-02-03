@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace ForestOfElves
@@ -12,15 +13,14 @@ namespace ForestOfElves
         {
             Map map = new Map();
             Player player = new Player();
+            Enemy enemy = new Enemy();
             while (true)
             {
-                Console.WriteLine(map.WallChecker().ToString());
                 map.MapDisplay();
-                player.PlayerA();
-                player.PlayerUpdate(map.WallChecker());
+                enemy.EnemyManager();
+                player.PlayerManager();        
+                Console.Clear();
             }
-            
-        }
-        
+        }       
     }
 }

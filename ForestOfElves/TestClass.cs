@@ -6,12 +6,7 @@ using System.Threading.Tasks;
 
 namespace ForestOfElves
 {
-    internal class PseudoCode
+    internal class TestClass
     {
-        /*Enemy and Player inherits from Character Manager. Health and Coordinates*/
-            
-
-            
-          
     }
 }

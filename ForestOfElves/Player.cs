@@ -8,15 +8,17 @@ namespace ForestOfElves
 {
     internal class Player
     {
-        public int currentx = 3;
-        public int currenty = 3;
+        
+        static int currentX = 3;
+        static int currentY = 3;
 
-        public int bufferx;
-        public int buffery;
+        public int bufferX = currentX;
+        public int bufferY = currentY;
   
-        public void PlayerA()
+        public void PlayerManager()
         {
-            Position(currentx, currenty);
+            Position(currentX, currentY);
+            PlayerUpdate();
         }
         static void Position(int x, int y)
         {
@@ -25,56 +27,59 @@ namespace ForestOfElves
             Console.Write("X");
         }
         
-        public void PlayerUpdate(bool playermove)
+        public void PlayerUpdate()
         {
             ConsoleKeyInfo KeyInfo;
             KeyInfo = Console.ReadKey(true);
+            Map map = new Map();
             if (KeyInfo.Key == ConsoleKey.W)
             {
-                buffery = currenty;
-                if (playermove == false)
+                bufferY--;
+                if (map.WallChecker(bufferX,bufferY) == false)
                 {
-                    currenty = buffery;
-                    currenty--;
+                    currentY = bufferY;
+                }
+                else if (map.WallChecker(bufferX, bufferY) == true)
+                {
+                    bufferY++;
                 }
             }
             if (KeyInfo.Key == ConsoleKey.A)
             {
-                bufferx = currentx;
-                if (playermove == false)
+                bufferX--;
+                if (map.WallChecker(bufferX, bufferY) == false)
                 {
-                    currentx = bufferx;
-                    currentx--;
+                    currentX = bufferX;
+                }
+                else if (map.WallChecker(bufferX, bufferY) == true)
+                {
+                    bufferX++;
                 }
             }
             if (KeyInfo.Key == ConsoleKey.S)
             {
-                buffery = currenty;
-                if (playermove == false)
+                bufferY++;
+                if (map.WallChecker(bufferX, bufferY) == false)
                 {
-                    currenty = buffery;
-                    currenty++;
+                    currentY = bufferY;
+                }
+                else if (map.WallChecker(bufferX, bufferY) == true)
+                {
+                    bufferY--;
                 }
             }
             if (KeyInfo.Key == ConsoleKey.D)
             {
-                bufferx = currentx;
-                if (playermove == false)
+                bufferX++;
+                if (map.WallChecker(bufferX, bufferY) == false)
                 {
-                    currentx = bufferx;
-                    currentx++;
+                    currentX = bufferX;
+                }
+                else if (map.WallChecker(bufferX, bufferY) == true)
+                {
+                    bufferX--;
                 }
             }
-            Console.Clear();
-            
-        }
-        public void PlayerMoverX()
-        {
-
-        }
-        public void PayerMoveY()
-        {
-
         }
     }
 }
