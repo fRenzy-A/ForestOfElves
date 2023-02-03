@@ -10,29 +10,17 @@ namespace ForestOfElves
 {
     internal class CharacterManager
     {
+        static Player player = new Player();
+        static Enemy enemy = new Enemy();
 
-        //public int x;
-        //public int y;
+        public int health = 1;
 
-        public int health;
-
-        public CharacterManager()
+        public void Kill()
         {
-            health = 1;
-        }
-        public void Manager()
-        {
-            //Position(currentX, currentY);
-            Player player = new Player();
-            Enemy enemy = new Enemy();
-            enemy.EnemyUpdate();
-            player.PlayerUpdate();
-        }
-        static void Position(int x, int y)
-        {
-            Console.CursorVisible = false;
-            Console.SetCursorPosition(x, y);
-            Console.Write("X");
+            if (enemy.bufferX == player.bufferX && enemy.bufferY == player.bufferY)
+            {
+                health--;
+            }
         }
     }
 }

@@ -11,21 +11,29 @@ namespace ForestOfElves
     {
         static Random random = new Random();
 
-        static int currentX = 5;
-        static int currentY = 5;
+        public int currentX;
+        public int currentY;
 
-        public int bufferX = currentX;
-        public int bufferY = currentY;
-        public void EnemyManager()
+        public int bufferX;
+        public int bufferY;
+        public void EnemyManager(int hp)
         {
-            Position(currentX,currentY);
+            bufferX = currentX;
+            bufferY = currentY;
+            Position(currentX,currentY, hp);
             EnemyUpdate();
         }
-        static void Position(int x, int y)
+        static void Position(int x, int y, int damage)
         {
+            CharacterManager health = new CharacterManager();
             Console.CursorVisible = false;
             Console.SetCursorPosition(x, y);
-            Console.Write("A");
+            string str = "A";
+            Console.Write(str);
+            if (damage == 0)
+            {
+                str.Remove(0);
+            }
         }
         public void EnemyUpdate()
         {

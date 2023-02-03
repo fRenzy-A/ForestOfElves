@@ -60,14 +60,17 @@ namespace ForestOfElves
                     if (map[y, x] == '0')
                     {
                         Console.BackgroundColor = ConsoleColor.Green;
+                        Console.ForegroundColor = ConsoleColor.Green;
                     }
                     if (map[y, x] == 'W')
                     {
                         Console.BackgroundColor = ConsoleColor.Blue;
+                        Console.ForegroundColor = ConsoleColor.Blue;
                     }
                     if (map[x, y] == '^')
                     {
                         Console.BackgroundColor = ConsoleColor.Gray;
+                        Console.ForegroundColor = ConsoleColor.Gray;
                     }
                     Console.Write(map[y, x]);
                 }

@@ -9,14 +9,16 @@ namespace ForestOfElves
     internal class Player
     {
         
-        static int currentX = 3;
-        static int currentY = 3;
+        public int currentX;
+        public int currentY;
 
-        public int bufferX = currentX;
-        public int bufferY = currentY;
+        public int bufferX;
+        public int bufferY;
   
         public void PlayerManager()
         {
+            bufferX = currentX;
+            bufferY = currentY;
             Position(currentX, currentY);
             PlayerUpdate();
         }
