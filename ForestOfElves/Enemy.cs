@@ -11,82 +11,18 @@ namespace ForestOfElves
     {
         static Random random = new Random();
 
-        public int currentX;
-        public int currentY;
+        public void EnemyManager()
+        {
 
-        public int bufferX;
-        public int bufferY;
-        public void EnemyManager(int hp)
-        {
-            bufferX = currentX;
-            bufferY = currentY;
-            Position(currentX,currentY, hp);
-            EnemyUpdate();
         }
-        static void Position(int x, int y, int damage)
+        static void Position()
         {
-            CharacterManager health = new CharacterManager();
-            Console.CursorVisible = false;
-            Console.SetCursorPosition(x, y);
-            string str = "A";
-            Console.Write(str);
-            if (damage == 0)
-            {
-                str.Remove(0);
-            }
+
         }
-        public void EnemyUpdate()
+        static void EnemyUpdate()
         {
             Map map = new Map();
             int move = random.Next(1, 5);
-            if (move == 1)
-            {
-                bufferY--;
-                if (map.WallChecker(bufferX, bufferY) == false)
-                {
-                    currentY = bufferY;
-                }
-                else if (map.WallChecker(bufferX, bufferY) == true)
-                {
-                    bufferY++;
-                }
-            }
-            if (move == 2)
-            {
-                bufferX--;
-                if (map.WallChecker(bufferX, bufferY) == false)
-                {
-                    currentX = bufferX;
-                }
-                else if (map.WallChecker(bufferX, bufferY) == true)
-                {
-                    bufferX++;
-                }
-            }
-            if (move == 3)
-            {
-                bufferY++;
-                if (map.WallChecker(bufferX, bufferY) == false)
-                {
-                    currentY = bufferY;
-                }
-                else if (map.WallChecker(bufferX, bufferY) == true)
-                {
-                    bufferY--;
-                }
-            }
-            if (move == 4)
-            {
-                bufferX++;
-                if (map.WallChecker(bufferX, bufferY) == false)
-                {
-                    currentX = bufferX;
-                }
-                else if (map.WallChecker(bufferX, bufferY) == true)
-                {
-                    bufferX--;
-                }
-            }
         }
     }
 }
