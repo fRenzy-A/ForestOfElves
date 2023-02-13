@@ -6,20 +6,40 @@ using System.Threading.Tasks;
 
 namespace ForestOfElves
 {
-    internal class Player
+    internal class Player : Character
     {
-        public void PlayerManager()
-        {
-
+        public int x;
+        public int y;
+        public void PlayerManager(int positionX, int positionY)
+        {         
+            x = positionX;
+            y = positionY;
+            Position(x, y, "X");
+            PlayerUpdate();
         }
-        static void Position()
-        {
-
-        }    
-        static void PlayerUpdate()
+        
+        void PlayerUpdate()
         {
             ConsoleKeyInfo KeyInfo;
             KeyInfo = Console.ReadKey(true);
+
+            if (KeyInfo.Key == ConsoleKey.W)
+            {
+                y--;
+            }
+            if (KeyInfo.Key == ConsoleKey.A)
+            {
+                x--;
+            }
+            if (KeyInfo.Key == ConsoleKey.S)
+            {
+                y++;
+            }
+            if (KeyInfo.Key == ConsoleKey.D)
+            {
+                x++;
+            }
+            Console.Clear();
         }
     }
 }

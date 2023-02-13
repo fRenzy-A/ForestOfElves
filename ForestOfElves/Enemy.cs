@@ -21,7 +21,6 @@ namespace ForestOfElves
         }
         static void EnemyUpdate()
         {
-            Map map = new Map();
             int move = random.Next(1, 5);
         }
     }
