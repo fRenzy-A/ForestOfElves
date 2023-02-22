@@ -17,16 +17,10 @@ namespace ForestOfElves
             Player player = new Player();
             Enemy enemy = new Enemy();
             Map map = new Map();
+
+            gameManager.GameUpdate();
             
-            while (true)
-            {
-                map.MapDisplay();
-                player.PlayerDraw(gameManager.playerX, gameManager.playerY);
-                enemy.EnemyDraw(gameManager.enemyX,gameManager.enemyY);
-                gameManager.InputUpdate();
-                
-            }
-            
-        }     
+        }
+        public ConsoleKeyInfo KeyInfo = Console.ReadKey(true);
     }
 }

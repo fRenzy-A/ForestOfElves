@@ -7,7 +7,8 @@ using System.Threading.Tasks;
 namespace ForestOfElves
 {
     internal class Character
-    {  
+    {
+  
         public void Position(int x, int y, string character)
         {
             Console.CursorVisible = false;

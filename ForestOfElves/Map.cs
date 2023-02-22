@@ -29,23 +29,6 @@ namespace ForestOfElves
                 { '^','0','0','0','0','0','0','0','0','0','0','0','0','0','0','^' },
                 { '^','^','^','^','^','^','^','^','^','^','^','^','^','^','^','^' }
             };
-        public bool WallChecker(int x, int y)
-        {
-            if (map[y, x] == '0')
-            {
-                return false;
-            }
-            if (map[y, x] == 'W')
-            {
-                return true;
-            }
-            if (map[y, x] == '^')
-            {
-                return true;
-            }
-            
-            return false;
-        }
         public void MapDisplay()
         {
             int height;
@@ -79,6 +62,19 @@ namespace ForestOfElves
             }
             Console.ResetColor();
   
+        }
+        public bool WallChecker(int x, int y)
+        {
+            if (map[y, x] == 'W')
+            {
+                return true;
+            }
+            if (map[y, x] == '^')
+            {
+                return true;
+            }
+            
+            return false;
         }
     }
 }
