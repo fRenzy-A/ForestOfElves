@@ -52,7 +52,7 @@ namespace ForestOfElves
             int width;
             height = map.GetLength(0);
             width = map.GetLength(1);
-
+            Console.SetCursorPosition(0, 0);
             for (int y = 0; y < width; y++)
             {
                 for (int x = 0; x < height; x++)
@@ -75,8 +75,10 @@ namespace ForestOfElves
                     Console.Write(map[y, x]);
                 }
                 Console.WriteLine();
+                
             }
             Console.ResetColor();
+  
         }
     }
 }
