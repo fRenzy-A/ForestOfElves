@@ -9,7 +9,6 @@ namespace ForestOfElves
 {
     internal class Map 
     {
-        
         public char[,] map = new char[,]
             {
                 { '^','^','^','^','^','^','^','^','^','^','^','^','^','^','^','^' },
@@ -29,6 +28,7 @@ namespace ForestOfElves
                 { '^','0','0','0','0','0','0','0','0','0','0','0','0','0','0','^' },
                 { '^','^','^','^','^','^','^','^','^','^','^','^','^','^','^','^' }
             };
+        public int mapX;
         public void MapDisplay()
         {
             Console.SetCursorPosition(0, 0);
@@ -55,14 +55,13 @@ namespace ForestOfElves
                         Console.BackgroundColor = ConsoleColor.Gray;
                         Console.ForegroundColor = ConsoleColor.Gray;
                     }
-                    Console.Write(map[y, x]);
+                    Console.Write(map[y, x]);    
                 }
-                Console.WriteLine();
-                
+                Console.WriteLine();        
             }
             Console.ResetColor();
-  
         }
+        
         public bool WallChecker(int x, int y)
         {
             if (map[y, x] == 'W')
@@ -72,8 +71,7 @@ namespace ForestOfElves
             if (map[y, x] == '^')
             {
                 return true;
-            }
-            
+            }           
             return false;
         }
     }

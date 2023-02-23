@@ -10,8 +10,9 @@ namespace ForestOfElves
 {
     internal class Enemy : Character
     {
-        Map map = new Map();
-        Player player = new Player();
+        Map map;
+        //Player player = new Player(); // a new player! uh-oh!!
+        Player player; // reference to the player
         static Random random = new Random();
        
         public string sprite = "A"; 
@@ -23,47 +24,64 @@ namespace ForestOfElves
         public int previousEnemyY;
 
         public bool dead;
+
+        public Enemy(Player player, Map map) // constructor
+        {
+            this.player = player;
+            this.map = map;
+        }
+
         public void Update()
         {
-            Position(enemyX, enemyY, sprite);
-            
-            Move();
+            EnemyKilled();
+            if (dead == false)
+            {
+                Position(enemyX, enemyY, sprite);
+
+                Move();
+            }
+            else return;
+           
         }
         public void Move()
         {
             previousEnemyX = enemyX;
             previousEnemyY = enemyY;
             int move = random.Next(1, 5);
-            if (dead == false)
+            if (move == 1)
             {
-                if (move == 1)
-                {
-                    enemyX--;
-                }
-                if (move == 2)
-                {
-                    enemyX++;
-                }
-                if (move == 3)
-                {
-                    enemyY--;
-                }
-                if (move == 4)
-                {
-                    enemyY++;
-                }
-                bool wallchecker = map.WallChecker(enemyX, enemyY);
-                if (wallchecker)
-                {
-                    enemyX = previousEnemyX;
-                    enemyY = previousEnemyY;
-                }
-
+                enemyX--;
             }
-            else return;
-            
+            if (move == 2)
+            {
+                enemyX++;
+            }
+            if (move == 3)
+            {
+                enemyY--;
+            }
+            if (move == 4)
+            {
+                enemyY++;
+            }
+            bool wallchecker = map.WallChecker(enemyX, enemyY);
+            if (wallchecker)
+            {
+                enemyX = previousEnemyX;
+                enemyY = previousEnemyY;
+            }
+
         }
-        
-        
+
+        public void EnemyKilled()
+        {
+            if (player.playerX == enemyX && player.playerY == enemyY)
+            {
+                dead = true;
+                Console.SetCursorPosition(25, 25);
+                Console.WriteLine("dead");
+                sprite = "<";
+            }
+        }
     }
 }

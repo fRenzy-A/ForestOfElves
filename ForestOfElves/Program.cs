@@ -11,14 +11,10 @@ namespace ForestOfElves
     internal class Program
     {
         public ConsoleKeyInfo KeyInfo = Console.ReadKey(true);
+
         static void Main(string[] args)
         {           
             GameManager gameManager = new GameManager();
-            Character character = new Character();
-            Player player = new Player();
-            Enemy enemy = new Enemy();
-            Map map = new Map();
-
             gameManager.GameUpdate();
             
         }

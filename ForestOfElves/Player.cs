@@ -9,20 +9,35 @@ namespace ForestOfElves
 {
     internal class Player : Character
     {
-        Map map = new Map();
+        Map map;
 
-        
+        public int health = 100;
+        public int shield = 50;
+
         public int playerX = 3;
         public int playerY = 4;
 
         public int previousPlayerX;
         public int previousPlayerY;
 
-
+        //public Player() // constructor
+        //{
+        //    Console.WriteLine("Player class instantiated...");
+        //    Console.ReadKey();
+        //}
+        public Player(Map map)
+        {
+            this.map = map;
+        }
         public void Update()
         {         
             Position(playerX, playerY, "X");
             Move();
+            Health();
+        }
+
+        public void Health()
+        {
         }
 
         public void Move()
