@@ -10,7 +10,7 @@ namespace ForestOfElves
     internal class Map 
     {
         
-        protected char[,] map = new char[,]
+        public char[,] map = new char[,]
             {
                 { '^','^','^','^','^','^','^','^','^','^','^','^','^','^','^','^' },
                 { '^','0','0','0','0','0','0','0','0','0','0','0','0','0','0','^' },
@@ -31,11 +31,11 @@ namespace ForestOfElves
             };
         public void MapDisplay()
         {
+            Console.SetCursorPosition(0, 0);
             int height;
             int width;
             height = map.GetLength(0);
             width = map.GetLength(1);
-            Console.SetCursorPosition(0, 0);
             for (int y = 0; y < width; y++)
             {
                 for (int x = 0; x < height; x++)

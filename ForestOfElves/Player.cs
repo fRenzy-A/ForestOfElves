@@ -10,28 +10,26 @@ namespace ForestOfElves
     internal class Player : Character
     {
         Map map = new Map();
-        Enemy enemy = new Enemy();
+
+        
         public int playerX = 3;
         public int playerY = 4;
 
         public int previousPlayerX;
         public int previousPlayerY;
 
-        public int currentPlayerX;
-        public int currentPlayerY;
+
         public void Update()
-        {
-            currentPlayerX = playerX;
-            currentPlayerY = playerY;
+        {         
             Position(playerX, playerY, "X");
-            enemy.Attacked();
             Move();
         }
 
         public void Move()
-        {
+        {               
             previousPlayerX = playerX;
             previousPlayerY = playerY;
+           
             Program coords = new Program();
             if (coords.KeyInfo.Key == ConsoleKey.W)
             {
@@ -50,11 +48,14 @@ namespace ForestOfElves
                 playerX++;
             }
             bool wallchecker = map.WallChecker(playerX, playerY);
+            
             if (wallchecker)
             {
                 playerX = previousPlayerX;
                 playerY = previousPlayerY;
             }
+           
         }
+
     }
 }

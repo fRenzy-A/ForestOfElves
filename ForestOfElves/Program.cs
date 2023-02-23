@@ -10,6 +10,7 @@ namespace ForestOfElves
 {
     internal class Program
     {
+        public ConsoleKeyInfo KeyInfo = Console.ReadKey(true);
         static void Main(string[] args)
         {           
             GameManager gameManager = new GameManager();
@@ -21,6 +22,6 @@ namespace ForestOfElves
             gameManager.GameUpdate();
             
         }
-        public ConsoleKeyInfo KeyInfo = Console.ReadKey(true);
+        
     }
 }
