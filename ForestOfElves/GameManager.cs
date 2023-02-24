@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Cryptography.X509Certificates;
@@ -10,24 +11,33 @@ namespace ForestOfElves
 {
     internal class GameManager
     {
+        
         static Map map = new Map();
         static Player player = new Player(map);
         static Enemy enemy = new Enemy(player,map);
-        static HUD HUD = new HUD(player);
+        static Enemy2 enemy2 = new Enemy2(player, map);
+        static Enemy3 enemy3 = new Enemy3(player, map);
+        static HUD HUD = new HUD(player,enemy,enemy2,enemy3);
         static Items items = new Items(player);
-     
+
         public void GameUpdate()
         {
             while (true)
-            {             
+            {
                 map.MapDisplay();
                 HUD.MainHUD();
-                
-                enemy.Update();
-                items.Update();
                 player.Update();
+                enemy.Update();
+                enemy2.Update();
+                enemy3.Update();    
+                items.Update();
+                player.Move();
+
+                
+                //Thread.Sleep(2000);
 
             }
+            
         }
 
         public void EnemyKilled()

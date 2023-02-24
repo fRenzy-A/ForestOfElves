@@ -1,23 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace ForestOfElves
 {
-    internal class Enemy : Character
+    internal class Enemy2 : Character
     {
         Map map;
         //Player player = new Player(); // a new player! uh-oh!!
         Player player; // reference to the player
         static Random random = new Random();
-       
-        public string sprite = "G"; 
 
-        public int enemyX = 36;
+        public string sprite = "D";
+
+        public int enemyX = 12;
         public int enemyY = 12;
 
         public int previousEnemyX;
@@ -26,7 +24,7 @@ namespace ForestOfElves
         public bool dead;
         public bool attacked;
 
-        public Enemy(Player player, Map map) // constructor
+        public Enemy2(Player player, Map map) // constructor
         {
             this.player = player;
             this.map = map;
@@ -38,33 +36,24 @@ namespace ForestOfElves
             Position(enemyX, enemyY, sprite);
             if (attacked)
             {
-                Attack();    
+                Attack();
             }
             else
             {
-                Move();
+                Move();                
             }
-            
 
         }
         public void Move()
         {
             previousEnemyX = enemyX;
             previousEnemyY = enemyY;
-            int move = random.Next(1, 5);
+            int move = random.Next(1, 3);
             if (move == 1)
-            {
-                enemyX--;
-            }
-            if (move == 2)
-            {
-                enemyX++;
-            }
-            if (move == 3)
             {
                 enemyY--;
             }
-            if (move == 4)
+            if (move == 2)
             {
                 enemyY++;
             }

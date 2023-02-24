@@ -9,7 +9,9 @@ namespace ForestOfElves
 {
     internal class Player : Character
     {
+        
         Map map;
+        public ConsoleKeyInfo KeyInfo;
 
         public int health = 100;
         public int shield = 50;
@@ -20,10 +22,8 @@ namespace ForestOfElves
         public int previousPlayerX;
         public int previousPlayerY;
 
-        public int futurePlayerX;
-        public int futurePlayerY;
-
         public int hasKey = 0;
+
 
         //public Player() // constructor
         //{
@@ -34,12 +34,10 @@ namespace ForestOfElves
         {
             this.map = map;
         }
+        
         public void Update()
         {
-            futurePlayerX = playerX + 1;
-            futurePlayerY = playerY + 1;
             Position(playerX, playerY, "X");
-            Move();
             Health();
         }
 
@@ -47,29 +45,24 @@ namespace ForestOfElves
         {
 
         }
-
         public void Move()
         {
-            
             previousPlayerX = playerX;
             previousPlayerY = playerY;
-
-            
-
-            Program coords = new Program();
-            if (coords.KeyInfo.Key == ConsoleKey.W)
+            KeyInfo = Console.ReadKey(true);
+            if (KeyInfo.Key == ConsoleKey.W)
             {
                 playerY--;
             }
-            if (coords.KeyInfo.Key == ConsoleKey.A)
+            if (KeyInfo.Key == ConsoleKey.A)
             {
                 playerX--;
             }
-            if (coords.KeyInfo.Key == ConsoleKey.S)
+            if (KeyInfo.Key == ConsoleKey.S)
             {
                 playerY++;
             }
-            if (coords.KeyInfo.Key == ConsoleKey.D)
+            if (KeyInfo.Key == ConsoleKey.D)
             {
                 playerX++;
             }

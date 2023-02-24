@@ -66,7 +66,7 @@ namespace ForestOfElves
         }
         public void HealthPotion()
         {
-            HPotionX = 7;
+            HPotionX = 15;
             HPotionY = 7;
             
             Position(HPotionX, HPotionY, "H");
