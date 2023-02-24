@@ -14,11 +14,16 @@ namespace ForestOfElves
         public int health = 100;
         public int shield = 50;
 
-        public int playerX = 3;
+        public int playerX = 7;
         public int playerY = 4;
 
         public int previousPlayerX;
         public int previousPlayerY;
+
+        public int futurePlayerX;
+        public int futurePlayerY;
+
+        public int hasKey = 0;
 
         //public Player() // constructor
         //{
@@ -30,7 +35,9 @@ namespace ForestOfElves
             this.map = map;
         }
         public void Update()
-        {         
+        {
+            futurePlayerX = playerX + 1;
+            futurePlayerY = playerY + 1;
             Position(playerX, playerY, "X");
             Move();
             Health();
@@ -38,13 +45,17 @@ namespace ForestOfElves
 
         public void Health()
         {
+
         }
 
         public void Move()
-        {               
+        {
+            
             previousPlayerX = playerX;
             previousPlayerY = playerY;
-           
+
+            
+
             Program coords = new Program();
             if (coords.KeyInfo.Key == ConsoleKey.W)
             {
@@ -63,12 +74,18 @@ namespace ForestOfElves
                 playerX++;
             }
             bool wallchecker = map.WallChecker(playerX, playerY);
-            
+
             if (wallchecker)
             {
                 playerX = previousPlayerX;
                 playerY = previousPlayerY;
             }
+            if (hasKey == 0 && map.publicMap[playerY,playerX] == "I")
+            {
+                playerX = previousPlayerX;
+                playerY = previousPlayerY;
+            }
+
            
         }
 

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -9,7 +10,7 @@ namespace ForestOfElves
 {
     internal class Map 
     {
-        public char[,] map = new char[,]
+        /*public char[,] map = new char[,]
             {
                 { '^','^','^','^','^','^','^','^','^','^','^','^','^','^','^','^' },
                 { '^','0','0','0','0','0','0','0','0','0','0','0','0','0','0','^' },
@@ -27,35 +28,53 @@ namespace ForestOfElves
                 { '^','0','0','0','0','0','0','0','0','0','0','0','0','0','0','^' },
                 { '^','0','0','0','0','0','0','0','0','0','0','0','0','0','0','^' },
                 { '^','^','^','^','^','^','^','^','^','^','^','^','^','^','^','^' }
-            };
-        public int mapX;
+            };*/
+
+        public string[] textmap = System.IO.File.ReadAllLines(@"MapFile.txt");
+
+        public string[,] publicMap;
         public void MapDisplay()
         {
+            string[,] map = new string[textmap.Length, textmap[0].Split(' ').Length];
+            publicMap = map;
+            //string[,] map = new string[textmap.GetLength(0),textmap.GetLength(1)];
+
+
+
             Console.SetCursorPosition(0, 0);
-            int height;
-            int width;
-            height = map.GetLength(0);
-            width = map.GetLength(1);
-            for (int y = 0; y < width; y++)
+            for (int x = 0; x < textmap.Length; x++)
             {
-                for (int x = 0; x < height; x++)
-                {
-                    if (map[y, x] == '0')
+                string line = textmap[x];
+                for (int y = 0; y < map.GetLength(1); y++)
+                {                   
+                    string[] split = line.Split(' ');
+                    map[x, y] = split[y];
+                    if (map[x, y] == "0")
                     {
                         Console.BackgroundColor = ConsoleColor.Green;
                         Console.ForegroundColor = ConsoleColor.Green;
                     }
-                    if (map[y, x] == 'W')
+                    if (map[x, y] == "W")
                     {
                         Console.BackgroundColor = ConsoleColor.Blue;
                         Console.ForegroundColor = ConsoleColor.Blue;
                     }
-                    if (map[x, y] == '^')
+                    if (map[x, y] == "^")
                     {
                         Console.BackgroundColor = ConsoleColor.Gray;
                         Console.ForegroundColor = ConsoleColor.Gray;
                     }
-                    Console.Write(map[y, x]);    
+                    if (map[x, y] == "B")
+                    {
+                        Console.BackgroundColor = ConsoleColor.Black;
+                        Console.ForegroundColor = ConsoleColor.Black;
+                    }
+                    if (map[x, y] == "I")
+                    {
+                        Console.BackgroundColor = ConsoleColor.DarkYellow;
+                        Console.ForegroundColor = ConsoleColor.DarkYellow;
+                    }
+                    Console.Write(map[x,y]);    
                 }
                 Console.WriteLine();        
             }
@@ -64,15 +83,24 @@ namespace ForestOfElves
         
         public bool WallChecker(int x, int y)
         {
-            if (map[y, x] == 'W')
+            if (publicMap[y, x] == "W")
             {
                 return true;
             }
-            if (map[y, x] == '^')
+            if (publicMap[y, x] == "^")
             {
                 return true;
             }           
             return false;
+        }
+
+        public void DoorChecker(int x, int y, int hasKey)
+        {
+            if (publicMap[y, x] == "I" && hasKey == 1)
+            {
+
+            }
+
         }
     }
 }

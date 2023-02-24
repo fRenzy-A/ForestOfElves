@@ -21,27 +21,40 @@ namespace ForestOfElves
         public int SPartX;
         public int SPartY;
 
+        public int KeyX;
+        public int KeyY;
+
         public string HSprite = "H";
         public string SHSprite = "S";
+        public string KeySprite = "K";
 
         public bool healthTaken = false;
         public bool shieldTaken = false;
-        
+        public bool keytaken = false;
         public void Update()
         {
+            KeyUpdate();
             HealthItemUpdate();
             ShieldItemUpdate();
         }
+
+        public void KeyUpdate()
+        {
+            if (keytaken == false)
+            {
+                TakeKey();
+            }
+            else return;
+
+        }
         public void HealthItemUpdate()
         {
-
-            
+          
             if (healthTaken == false)
             {
                 TakePotion();
             }
             else return;
-
         }
         public void ShieldItemUpdate()
         {
@@ -64,6 +77,21 @@ namespace ForestOfElves
             SPartY = 9;
             Position(SPartX, SPartY, "S");
 
+        }
+        public void KeyPosition()
+        {
+            KeyX = 10;
+            KeyY = 10;
+            Position(KeyX, KeyY, KeySprite);
+        }
+        public void TakeKey()
+        {
+            KeyPosition();
+            if (player.playerX == KeyX && player.playerY == KeyY)
+            {
+                player.hasKey = player.hasKey + 1;
+                KeySprite = " ";
+            }
         }
 
         public void TakePotion()

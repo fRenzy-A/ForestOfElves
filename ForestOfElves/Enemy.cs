@@ -24,6 +24,7 @@ namespace ForestOfElves
         public int previousEnemyY;
 
         public bool dead;
+        public bool attacked;
 
         public Enemy(Player player, Map map) // constructor
         {
@@ -33,12 +34,22 @@ namespace ForestOfElves
 
         public void Update()
         {
-            EnemyKilled();
+            //EnemyKilled();
+            EnemyAttacked();
             if (dead == false)
             {
                 Position(enemyX, enemyY, sprite);
+                if (attacked)
+                {
+                    return;
+                }
+                else
+                {
+                    attacked = false;
+                    Move();
+                }
+                    
 
-                Move();
             }
             else return;
            
@@ -72,7 +83,19 @@ namespace ForestOfElves
             }
 
         }
-
+        public void EnemyAttacked()
+        {
+            if (player.futurePlayerX == enemyX && player.futurePlayerY == enemyY)
+            {
+                attacked = true;
+            }
+            else if (player.playerX == enemyX && player.playerY == enemyX)
+            {
+                enemyX = previousEnemyX;
+                enemyY = previousEnemyY;
+                attacked = true;
+            }
+        }
         public void EnemyKilled()
         {
             if (player.playerX == enemyX && player.playerY == enemyY)
@@ -80,7 +103,6 @@ namespace ForestOfElves
                 dead = true;
                 Console.SetCursorPosition(25, 25);
                 Console.WriteLine("dead");
-                sprite = "<";
             }
         }
     }

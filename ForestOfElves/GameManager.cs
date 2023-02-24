@@ -23,18 +23,10 @@ namespace ForestOfElves
                 map.MapDisplay();
                 HUD.MainHUD();
                 
-
-
-
-
                 enemy.Update();
                 items.Update();
                 player.Update();
 
-                Console.SetCursorPosition(17, 17);
-                Console.Write(player.playerX + " " + player.playerY);
-                Console.Write(enemy.enemyX + " " + enemy.enemyY + "     ");
-                Console.Write(map.mapX);
             }
         }
 
