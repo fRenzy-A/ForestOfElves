@@ -34,8 +34,7 @@ namespace ForestOfElves
 
         public void Update()
         {
-            EnemyAttacked();
-            Position(enemyX, enemyY, sprite);
+            EnemyAttacked();           
             if (attacked)
             {
                 Attack();    
@@ -46,6 +45,10 @@ namespace ForestOfElves
             }
             
 
+        }
+        public void Draw()
+        {
+            whereIs(enemyX, enemyY, sprite);
         }
         public void Move()
         {

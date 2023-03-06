@@ -69,20 +69,20 @@ namespace ForestOfElves
             HPotionX = 15;
             HPotionY = 7;
             
-            Position(HPotionX, HPotionY, "H");
+            whereIs(HPotionX, HPotionY, "H");
         }
         public void ShieldParts()
         {
             SPartX = 8;
             SPartY = 9;
-            Position(SPartX, SPartY, "S");
+            whereIs(SPartX, SPartY, "S");
 
         }
         public void KeyPosition()
         {
             KeyX = 10;
             KeyY = 10;
-            Position(KeyX, KeyY, KeySprite);
+            whereIs(KeyX, KeyY, KeySprite);
         }
         public void TakeKey()
         {

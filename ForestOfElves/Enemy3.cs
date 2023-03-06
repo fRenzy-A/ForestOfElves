@@ -31,7 +31,7 @@ namespace ForestOfElves
         public void Update()
         {
             EnemyAttacked();
-            Position(enemyX, enemyY, sprite);
+            whereIs(enemyX, enemyY, sprite);
             if (attacked)
             {
                 Attack();

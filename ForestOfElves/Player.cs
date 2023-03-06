@@ -11,7 +11,7 @@ namespace ForestOfElves
     {
         
         Map map;
-        public ConsoleKeyInfo KeyInfo;
+        UserInput input;
 
         public int health = 100;
         public int shield = 50;
@@ -30,39 +30,44 @@ namespace ForestOfElves
         //    Console.WriteLine("Player class instantiated...");
         //    Console.ReadKey();
         //}
-        public Player(Map map)
+        public Player(Map map, UserInput input)
         {
             this.map = map;
+            this.input = input;
         }
         
         public void Update()
-        {
-            Position(playerX, playerY, "X");
+        {           
             Health();
+            Input();
+        }
+
+        public void Draw()
+        {
+            whereIs(playerX, playerY, "X");
         }
 
         public void Health()
         {
 
         }
-        public void Move()
+        public void Input()
         {
             previousPlayerX = playerX;
             previousPlayerY = playerY;
-            KeyInfo = Console.ReadKey(true);
-            if (KeyInfo.Key == ConsoleKey.W)
+            if (input.playerInput == "W")
             {
                 playerY--;
             }
-            if (KeyInfo.Key == ConsoleKey.A)
+            if (input.playerInput == "A")
             {
                 playerX--;
             }
-            if (KeyInfo.Key == ConsoleKey.S)
+            if (input.playerInput == "S")
             {
                 playerY++;
             }
-            if (KeyInfo.Key == ConsoleKey.D)
+            if (input.playerInput == "D")
             {
                 playerX++;
             }

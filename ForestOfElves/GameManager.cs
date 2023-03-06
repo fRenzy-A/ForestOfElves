@@ -13,7 +13,8 @@ namespace ForestOfElves
     {
         
         static Map map = new Map();
-        static Player player = new Player(map);
+        static UserInput input = new UserInput();
+        static Player player = new Player(map,input);
         static Enemy enemy = new Enemy(player,map);
         static Enemy2 enemy2 = new Enemy2(player, map);
         static Enemy3 enemy3 = new Enemy3(player, map);
@@ -26,14 +27,14 @@ namespace ForestOfElves
             {
                 map.MapDisplay();
                 HUD.MainHUD();
-                player.Update();
-                enemy.Update();
-                enemy2.Update();
-                enemy3.Update();    
-                items.Update();
-                player.Move();
-
                 
+                player.Update();
+                enemy.Update(); 
+                items.Update();
+                player.Draw();
+                input.Input();
+
+
                 //Thread.Sleep(2000);
 
             }
