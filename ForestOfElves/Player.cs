@@ -24,6 +24,8 @@ namespace ForestOfElves
 
         public int hasKey = 0;
 
+        public bool attacking;
+
 
         //public Player() // constructor
         //{
@@ -36,10 +38,15 @@ namespace ForestOfElves
             this.input = input;
         }
         
-        public void Update()
-        {           
-            Health();
-            Input();
+        public void Update(bool enemyAttacked)
+        {
+            attacking = false;
+            if (enemyAttacked)
+            {
+                Attacking();
+            }
+            else Moving();
+
         }
 
         public void Draw()
@@ -47,27 +54,27 @@ namespace ForestOfElves
             whereIs(playerX, playerY, "X");
         }
 
-        public void Health()
+        public void Attacked()
         {
-
+            if enemy.attacking
         }
-        public void Input()
+        public void Moving()
         {
             previousPlayerX = playerX;
             previousPlayerY = playerY;
-            if (input.playerInput == "W")
+            if (input.UP)
             {
                 playerY--;
             }
-            if (input.playerInput == "A")
+            if (input.LEFT)
             {
                 playerX--;
             }
-            if (input.playerInput == "S")
+            if (input.DOWN)
             {
                 playerY++;
             }
-            if (input.playerInput == "D")
+            if (input.RIGHT)
             {
                 playerX++;
             }
@@ -82,10 +89,26 @@ namespace ForestOfElves
             {
                 playerX = previousPlayerX;
                 playerY = previousPlayerY;
-            }
-
-           
+            }          
         }
-
+        public void Attacking()
+        {
+            if (input.UP)
+            {
+                attacking = true;
+            }
+            if (input.LEFT)
+            {
+                attacking = true;
+            }
+            if (input.DOWN)
+            {
+                attacking = true;
+            }
+            if (input.RIGHT)
+            {
+                attacking = true;
+            }
+        }
     }
 }

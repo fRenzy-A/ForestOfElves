@@ -30,7 +30,7 @@ namespace ForestOfElves
             Console.WriteLine("-------------------------------------------------------------");
             Console.WriteLine("Health |H|: " + player.health);     
             Console.WriteLine("Shield |S|: " + player.shield);
-            if (enemy.attacked)
+            if (enemy.inBattle)
             {
                 Console.WriteLine("Fast Grunt is dead         ");
             }
@@ -53,6 +53,7 @@ namespace ForestOfElves
                 
                 Console.Write("| | No Key");
             }
+            Console.WriteLine(enemy.health);
             
         }
     }

@@ -26,12 +26,13 @@ namespace ForestOfElves
             while (true)
             {
                 map.MapDisplay();
-                HUD.MainHUD();
                 
-                player.Update();
+                player.Update(enemy.inBattle);
                 enemy.Update(); 
                 items.Update();
                 player.Draw();
+                enemy.Draw();
+                HUD.MainHUD();
                 input.Input();
 
 

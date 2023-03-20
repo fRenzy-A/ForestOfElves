@@ -14,17 +14,22 @@ namespace ForestOfElves
         //Player player = new Player(); // a new player! uh-oh!!
         Player player; // reference to the player
         static Random random = new Random();
-       
-        public string sprite = "G"; 
 
-        public int enemyX = 36;
+        public string sprite = "G";
+
+        public int enemyX = 12;
         public int enemyY = 12;
+
+        public int health = 5;
 
         public int previousEnemyX;
         public int previousEnemyY;
 
         public bool dead;
+        public bool inBattle = false;
         public bool attacked;
+        public bool attackingSmall;
+        public bool attackingLarge;
 
         public Enemy(Player player, Map map) // constructor
         {
@@ -34,21 +39,21 @@ namespace ForestOfElves
 
         public void Update()
         {
-            EnemyAttacked();           
-            if (attacked)
-            {
-                Attack();    
-            }
-            else
-            {
-                Move();
-            }
-            
+            attacked = false;
 
+            IsPlayerNear();
+            if (inBattle)
+            {
+                IsBeingAttacked();
+                Attacking(6);
+            }
+            else Move();
         }
         public void Draw()
         {
+
             whereIs(enemyX, enemyY, sprite);
+
         }
         public void Move()
         {
@@ -79,26 +84,60 @@ namespace ForestOfElves
             }
 
         }
-        public void EnemyAttacked()
-        {
-            if (player.playerX == enemyX && player.playerY == enemyY)
+
+        public void IsBeingAttacked()
+        {           
+            if (player.attacking)
             {
-                attacked = true;
+                health--;
+            }
+            if (health == 0)
+            {
+                sprite = " ";
+                inBattle = false;
             }
         }
-        public void Attack()
-        {
 
-            sprite = " ";
-            return;
-
-        }
-        public void EnemyKilled()
+        
+        public void Attacking(int attackChanceMax)
         {
-            if (player.playerX == enemyX && player.playerY == enemyY)
+            int howMuchDamage = random.Next(1, attackChanceMax);
+
+            switch (howMuchDamage)
             {
-                attacked = true;
+                case 3:
+                    attackingLarge = true;
+                    break;
+                case 4:
+                    attackingSmall = true;
+                    break;
             }
         }
+        public void IsPlayerNear()
+        {
+            int nearUp = enemyY - 1;
+            int nearDown = enemyY + 1;
+            int nearLeft = enemyX - 1;
+            int nearRight = enemyX + 1;
+
+            if (enemyX == player.playerX && nearUp == player.playerY)
+            {
+                inBattle = true;
+            }
+            else if (enemyX == player.playerX && nearDown == player.playerY)
+            {
+                inBattle = true;
+            }
+            else if (nearLeft == player.playerX && enemyY == player.playerY)
+            {
+                inBattle = true;
+            }
+            else if (nearRight == player.playerX && enemyY == player.playerY)
+            {
+                inBattle = true;
+            }
+            
+        }
+
     }
 }
