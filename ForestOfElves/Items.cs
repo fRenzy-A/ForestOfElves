@@ -31,6 +31,7 @@ namespace ForestOfElves
         public bool healthTaken = false;
         public bool shieldTaken = false;
         public bool keytaken = false;
+
         public void Update()
         {
             KeyUpdate();
@@ -76,7 +77,6 @@ namespace ForestOfElves
             SPartX = 8;
             SPartY = 9;
             whereIs(SPartX, SPartY, "S");
-
         }
         public void KeyPosition()
         {
@@ -105,7 +105,7 @@ namespace ForestOfElves
             if (healthTaken)
             {
                 HSprite = " ";
-                player.health = player.health + 100;
+                player.howManyPotions++;
                 
             }
         }
@@ -115,12 +115,11 @@ namespace ForestOfElves
             if (player.playerX == SPartX && player.playerY == SPartY)
             {
                 shieldTaken = true;
-
             }
             if (shieldTaken)
             {
                 SHSprite = " ";
-                player.shield = player.shield + 100;
+                player.howManyShields++;
             }
         }
     }

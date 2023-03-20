@@ -25,7 +25,16 @@ namespace ForestOfElves
         public int hasKey = 0;
 
         public bool attacking;
+        public bool healing;
+        public bool repairing;
+        public bool blockDamage;
 
+        public int currentplayerDamage = 50;
+
+        public int howManyPotions;
+        public int howManyShields;
+
+        
 
         //public Player() // constructor
         //{
@@ -38,26 +47,59 @@ namespace ForestOfElves
             this.input = input;
         }
         
-        public void Update(bool enemyAttacked)
+        public void Update(bool enemyAttacked,int howMuchDmg)
         {
             attacking = false;
             if (enemyAttacked)
             {
-                Attacking();
+                IsDamaged(howMuchDmg);
+                InBattle();
+                UsePotAndHeal(50);
+                UsePartsAndRepair(25);
             }
             else Moving();
-
         }
 
         public void Draw()
         {
             whereIs(playerX, playerY, "X");
         }
-
-        public void Attacked()
+        public void IsDamaged(int howMuchDmg)
         {
-            if enemy.attacking
+            health -= howMuchDmg;
         }
+
+        public void UsePotAndHeal(int howMuch)
+        {
+            if (healing)
+            {
+                if (howManyPotions == 0)
+                {
+                    return;
+                }
+                else
+                {
+                    howManyPotions--;
+                    health += howMuch;
+                }                
+            }
+        }
+        public void UsePartsAndRepair(int howMuch)
+        {
+            if (repairing)
+            {
+                if (howManyShields == 0)
+                {
+                    return ;
+                }
+                else
+                {
+                    howManyShields--;
+                    shield += howMuch;
+                }                
+            }
+        }
+
         public void Moving()
         {
             previousPlayerX = playerX;
@@ -91,7 +133,7 @@ namespace ForestOfElves
                 playerY = previousPlayerY;
             }          
         }
-        public void Attacking()
+        public void InBattle()
         {
             if (input.UP)
             {
@@ -99,15 +141,15 @@ namespace ForestOfElves
             }
             if (input.LEFT)
             {
-                attacking = true;
+                healing = true;
             }
             if (input.DOWN)
             {
-                attacking = true;
+                blockDamage = true;
             }
             if (input.RIGHT)
-            {
-                attacking = true;
+            {                
+                repairing = true;
             }
         }
     }

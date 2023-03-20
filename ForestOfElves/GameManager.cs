@@ -16,9 +16,7 @@ namespace ForestOfElves
         static UserInput input = new UserInput();
         static Player player = new Player(map,input);
         static Enemy enemy = new Enemy(player,map);
-        static Enemy2 enemy2 = new Enemy2(player, map);
-        static Enemy3 enemy3 = new Enemy3(player, map);
-        static HUD HUD = new HUD(player,enemy,enemy2,enemy3);
+        static HUD HUD = new HUD(player,enemy);
         static Items items = new Items(player);
 
         public void GameUpdate()
@@ -27,15 +25,15 @@ namespace ForestOfElves
             {
                 map.MapDisplay();
                 
-                player.Update(enemy.inBattle);
+                player.Update(enemy.inBattle,enemy.currentEnemyDamage);
                 enemy.Update(); 
                 items.Update();
                 player.Draw();
                 enemy.Draw();
+
+
                 HUD.MainHUD();
                 input.Input();
-
-
                 //Thread.Sleep(2000);
 
             }

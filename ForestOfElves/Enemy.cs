@@ -20,7 +20,7 @@ namespace ForestOfElves
         public int enemyX = 12;
         public int enemyY = 12;
 
-        public int health = 5;
+        public int health = 100;
 
         public int previousEnemyX;
         public int previousEnemyY;
@@ -28,8 +28,8 @@ namespace ForestOfElves
         public bool dead;
         public bool inBattle = false;
         public bool attacked;
-        public bool attackingSmall;
-        public bool attackingLarge;
+        
+        public int currentEnemyDamage;
 
         public Enemy(Player player, Map map) // constructor
         {
@@ -37,8 +37,10 @@ namespace ForestOfElves
             this.map = map;
         }
 
+
         public void Update()
         {
+            
             attacked = false;
 
             IsPlayerNear();
@@ -46,14 +48,14 @@ namespace ForestOfElves
             {
                 IsBeingAttacked();
                 Attacking(6);
+                
             }
             else Move();
-        }
+            Defeated();
+        }    
         public void Draw()
         {
-
             whereIs(enemyX, enemyY, sprite);
-
         }
         public void Move()
         {
@@ -89,29 +91,21 @@ namespace ForestOfElves
         {           
             if (player.attacking)
             {
-                health--;
+                health-= player.currentplayerDamage;
             }
-            if (health == 0)
-            {
-                sprite = " ";
-                inBattle = false;
-            }
-        }
-
-        
+            
+        } 
         public void Attacking(int attackChanceMax)
         {
-            int howMuchDamage = random.Next(1, attackChanceMax);
+            
+            int damageChance = random.Next(1, attackChanceMax);
 
-            switch (howMuchDamage)
+            if (damageChance == 1)
             {
-                case 3:
-                    attackingLarge = true;
-                    break;
-                case 4:
-                    attackingSmall = true;
-                    break;
+                currentEnemyDamage = 10;
             }
+            else currentEnemyDamage = 0;
+
         }
         public void IsPlayerNear()
         {
@@ -135,9 +129,16 @@ namespace ForestOfElves
             else if (nearRight == player.playerX && enemyY == player.playerY)
             {
                 inBattle = true;
-            }
-            
+            }            
         }
-
+        public void Defeated()
+        {
+            if (health == 0)
+            {
+                sprite = "";
+                inBattle = false;
+            }
+            return;
+        }
     }
 }

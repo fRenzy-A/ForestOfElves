@@ -24,6 +24,8 @@ namespace ForestOfElves
             RIGHT = false;
             ConsoleKeyInfo playerInput = Console.ReadKey(true);
 
+
+
             switch (playerInput.Key)
             {
                 case ConsoleKey.W:
@@ -38,8 +40,8 @@ namespace ForestOfElves
                 case ConsoleKey.D:
                     RIGHT = true;
                     break;
-
             }
+            
         }
     }
 }
