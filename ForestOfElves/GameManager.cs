@@ -14,9 +14,11 @@ namespace ForestOfElves
         
         static Map map = new Map();
         static UserInput input = new UserInput();
+        static Character character = new Character();
         static Player player = new Player(map,input);
-        static Enemy enemy = new Enemy(player,map);
-        static HUD HUD = new HUD(player,enemy);
+        static Grunt grunt = new Grunt();
+        static Enemy enemy = new Enemy(player,map, character);
+        static HUD HUD = new HUD(player,enemy, map);
         static Items items = new Items(player);
 
         public void GameUpdate()

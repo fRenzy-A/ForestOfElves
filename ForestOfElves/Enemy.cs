@@ -8,11 +8,12 @@ using System.Threading.Tasks;
 
 namespace ForestOfElves
 {
-    internal class Enemy : Character
+    public class Enemy
     {
         Map map;
         //Player player = new Player(); // a new player! uh-oh!!
         Player player; // reference to the player
+        Character character;
         static Random random = new Random();
 
         public string sprite = "G";
@@ -31,10 +32,11 @@ namespace ForestOfElves
         
         public int currentEnemyDamage;
 
-        public Enemy(Player player, Map map) // constructor
+        public Enemy(Player player, Map map, Character character) // constructor
         {
             this.player = player;
             this.map = map;
+            this.character = character;
         }
 
 
@@ -55,7 +57,7 @@ namespace ForestOfElves
         }    
         public void Draw()
         {
-            whereIs(enemyX, enemyY, sprite);
+            character.whereIs(enemyX, enemyY, sprite);
         }
         public void Move()
         {

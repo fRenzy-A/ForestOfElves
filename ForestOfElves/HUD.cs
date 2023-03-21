@@ -10,30 +10,28 @@ namespace ForestOfElves
     {
         Player player;
         Enemy enemy;
+        Map map;
 
+        int removeDelay = 3;
 
         static int x;
         static int y;
-        public HUD(Player player,Enemy enemy)
+        public HUD(Player player,Enemy enemy, Map map)
         {
             this.player = player;
             this.enemy = enemy;
+            this.map = map;
         }
         public void MainHUD()
         {
             
             
             x = 0;
-            y = 21;
+            y = map.publicMap.GetLength(0);
             Console.SetCursorPosition(x,y);
             Console.WriteLine("-------------------------------------------------------------");
-            Console.WriteLine("Health |H|: " + player.health + "" + "\r\nShield |S|: " + player.shield + "");
-            //Console.Write();
-            if (enemy.inBattle)
-            {
-                Console.WriteLine(enemy.health + "");
-            }
-
+            Console.WriteLine("Health |H|: " + player.health + "     ");
+            Console.WriteLine("Shield |S|: " + player.shield + "     ");
             if (player.hasKey == 1)
             {
                 Console.SetCursorPosition(0,Console.CursorTop);
@@ -42,12 +40,26 @@ namespace ForestOfElves
             else
             {              
                 Console.WriteLine("| | No Key");
-            }           
+            }
+            BattleInfo();
         }
 
         void BattleInfo()
         {
-
+            
+            if (enemy.inBattle)
+            {
+                Console.WriteLine("Enemy HP: " + enemy.health + "    ");
+                if (enemy.health == 0)
+                {
+                    removeDelay--;
+                    Console.WriteLine("Enemy defeated");
+                    if (removeDelay == 0)
+                    {
+                        Console.WriteLine("                ");
+                    }
+                }
+            }
         }
     }
 }
