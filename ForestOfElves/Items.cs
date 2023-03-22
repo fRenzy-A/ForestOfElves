@@ -87,7 +87,7 @@ namespace ForestOfElves
         public void TakeKey()
         {
             KeyPosition();
-            if (player.playerX == KeyX && player.playerY == KeyY)
+            if (player.x == KeyX && player.y == KeyY)
             {
                 player.hasKey = player.hasKey + 1;
                 KeySprite = " ";
@@ -97,7 +97,7 @@ namespace ForestOfElves
         public void TakePotion()
         {
             HealthPotion();
-            if (player.playerX == HPotionX && player.playerY == HPotionY)
+            if (player.x == HPotionX && player.y == HPotionY)
             {
                 healthTaken = true;
                 
@@ -112,7 +112,7 @@ namespace ForestOfElves
         public void TakeShield()
         {
             ShieldParts();
-            if (player.playerX == SPartX && player.playerY == SPartY)
+            if (player.x == SPartX && player.y == SPartY)
             {
                 shieldTaken = true;
             }

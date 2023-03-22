@@ -16,11 +16,16 @@ namespace ForestOfElves
         public int health = 100;
         public int shield = 50;
 
-        public int playerX = 7;
-        public int playerY = 4;
+        public int x = 7;
+        public int y = 4;
 
-        public int previousPlayerX;
-        public int previousPlayerY;
+        public int dx;
+        public int dy;
+        public int ndx;
+        public int ndy;
+
+        public int previousX;
+        public int previousY;
 
         public int hasKey = 0;
 
@@ -33,8 +38,6 @@ namespace ForestOfElves
 
         public int howManyPotions;
         public int howManyShields;
-
-        public bool inBattle = false;
 
 
 
@@ -49,30 +52,35 @@ namespace ForestOfElves
             this.input = input;
             
         }
-        
-        public void Update()
+
+        public void Update(int enemyX, int enemyY, Enemy enemy)
         {
             attacking = false;
-            IsPlayerNear();
-            if (inBattle)
+            Moving();
+
+            if (enemyX == x && enemyY == y && !enemy.dead)
             {
-                IsDamaged();
-                InBattle();
-                UsePotAndHeal(50);
-                UsePartsAndRepair(25);
+                Attack(enemy);
+                enemy.attacked = true;
             }
-            else Moving();
         }
 
         public void Draw()
         {
-            whereIs(playerX, playerY, "X");
+            whereIs(x, y, "X");
         }
-        public void IsDamaged()
+        public void TakeDamage(int enemyDamage)
         {
-            health -= 10;
+            health -= enemyDamage;
         }
 
+        public void Attack(Enemy enemy)
+        {
+            
+            enemy.TakeDamage();
+            x = previousX;
+            y = previousY;
+        }
         public void UsePotAndHeal(int howMuch)
         {
             if (healing)
@@ -103,52 +111,64 @@ namespace ForestOfElves
                 }                
             }
         }
-
-        public void Moving()
+        public void Input()
         {
-            previousPlayerX = playerX;
-            previousPlayerY = playerY;
             if (input.UP)
             {
-                playerY--;
+                ndy = y - 1;
             }
             if (input.LEFT)
             {
-                playerX--;
+                ndx = x - 1;
             }
             if (input.DOWN)
             {
-                playerY++;
+                dy = y + 1;
             }
             if (input.RIGHT)
             {
-                playerX++;
+                dx = x + 1;
             }
-            bool wallchecker = map.WallChecker(playerX, playerY);
+            dx = x + 1;
+            dy = y + 1;
+            ndx = x - 1;
+            ndy = y - 1;
+        }
+        public void Moving()
+        {
+            previousX = x;
+            previousY = y;
+            
 
+            if (input.UP)
+            {
+                y--;
+            }
+            if (input.LEFT)
+            {
+                x--;
+            }
+            if (input.DOWN)
+            {
+                y++;
+            }
+            if (input.RIGHT)
+            {
+                x++;
+            }
+            bool wallchecker = map.WallChecker(x, y);
             if (wallchecker)
             {
-                playerX = previousPlayerX;
-                playerY = previousPlayerY;
+                x = previousX;
+                y = previousY;
             }
-            if (hasKey == 0 && map.publicMap[playerY,playerX] == "I")
+            if (hasKey == 0 && map.publicMap[y,x] == "I")
             {
-                playerX = previousPlayerX;
-                playerY = previousPlayerY;
+                x = previousX;
+                y = previousY;
             }          
         }
-        public void IsPlayerNear()
-        {
-            int nearUp = playerY - 1;
-            int nearDown = playerY + 1;
-            int nearLeft = playerX - 1;
-            int nearRight = playerX + 1;
-
-            if (nearLeft == Enemy.enemyX && playerY == Enemy.enemyY || nearRight == Enemy.enemyX && playerY == Enemy.enemyY || playerX == Enemy.enemyX && nearUp == Enemy.enemyY || nearDown == Enemy.enemyX && playerY == Enemy.enemyY)
-            {
-                inBattle = true;
-            }
-        }
+        
         public void InBattle()
         {
             if (input.UP)

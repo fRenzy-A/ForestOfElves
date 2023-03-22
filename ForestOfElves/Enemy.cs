@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace ForestOfElves
 {
-    internal class Enemy
+    internal class Enemy : Character
     {
         Map map;
         //Player player = new Player(); // a new player! uh-oh!!
@@ -17,13 +17,13 @@ namespace ForestOfElves
 
         public string sprite;
 
-        public static int enemyX;
-        public static int enemyY;
+        public int x;
+        public int y;
 
         public int health = 100;
 
-        public int previousEnemyX;
-        public int previousEnemyY;
+        public int previousX;
+        public int previousY;
 
         public bool attacked;
         
@@ -32,6 +32,9 @@ namespace ForestOfElves
 
         public int howManyPlyrMoves;
         public int amountLeft;
+
+        public bool dead = false;
+
         public Enemy(Player player, Map map) // constructor
         {
             this.player = player;
@@ -42,77 +45,69 @@ namespace ForestOfElves
         {
 
         }
-          
         public void Draw()
         {
-            whereIs(enemyX, enemyY, sprite);
-        }
-        public void whereIs(int x, int y, string character)
-        {
-            Console.CursorVisible = false;
-            Console.SetCursorPosition(x, y);
-            Console.Write(character);
+            whereIs(x, y, sprite);
         }
         public void Move()
         {
-            previousEnemyX = enemyX;
-            previousEnemyY = enemyY;
+            previousX = x;
+            previousY = y;
             int move = random.Next(1, 5);
             if (move == 1)
             {
-                enemyX--;
+                x--;
             }
             if (move == 2)
             {
-                enemyX++;
+                x++;
             }
             if (move == 3)
             {
-                enemyY--;
+                y--;
             }
             if (move == 4)
             {
-                enemyY++;
+                y++;
             }
-            bool wallchecker = map.WallChecker(enemyX, enemyY);
+            bool wallchecker = map.WallChecker(x, y);
             if (wallchecker)
             {
-                enemyX = previousEnemyX;
-                enemyY = previousEnemyY;
+                x = previousX;
+                y = previousY;
             }
 
         }
 
-        public void IsBeingAttacked()
-        {           
-            if (player.attacking)
-            {
-                health-= player.currentplayerDamage;
-            }
-            
-        } 
-        public void Attacking(int attackChanceMax)
+        public void Combat()
         {
-            
-            int damageChance = random.Next(1, attackChanceMax);
+            TakeDamage();
+            Attacking();
+        }
+        public virtual void TakeDamage()
+        {           
+            /*health -= player.currentplayerDamage;        
 
-            if (damageChance == 1)
+            if (health <= 0)
             {
-                currentEnemyDamage = 10;
-            }
-            else currentEnemyDamage = 0;
+                sprite = "k";
+                dead = true;
+                return;
+            }*/
+        } 
+        public virtual void Attacking()
+        {
+      
+            /*currentEnemyDamage = 10;
 
+            player.TakeDamage(currentEnemyDamage);
+            x = previousX;
+            y = previousY;
+            */
         }
         
-        public void Defeated()
+        public virtual void IsPlayerNear()
         {
-            if (health == 0)
-            {
-                sprite = "";
-                player.inBattle = false;
-                return;
-            }
-            
         }
     }
 }

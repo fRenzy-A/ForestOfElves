@@ -9,42 +9,81 @@ namespace ForestOfElves
     internal class Grunt : Enemy
     {
         Player player;
-        Random random;
-        public Grunt(Player player, Map map, Random random) : base(player, map)
+        //Random random;
+        Map map;
+        public Grunt(Player player, Map map) : base(player,map) 
         {
-            this.random = random;
+            //this.random = random;
             this.player = player;
             sprite = "G";
-            enemyX = 12;
-            enemyY = 12;
+            x = 12;
+            y = 12;
             howManyPlyrMoves = 2;
             amountLeft = howManyPlyrMoves;
             currentAttackChance = 6;
-            this.random = random;
+            //this.random = random;
         }
         public override void Update()
         {
-
-            
             attacked = false;
-
-            if (player.inBattle)
+            //IsPlayerNear();
+            amountLeft -= 1;
+            if (dead)
             {
-                
-                IsBeingAttacked();
-                Attacking(currentAttackChance);
-                
+                return;
             }
             else
             {
-                amountLeft -= 1;
                 if (amountLeft == 0)
                 {
                     Move();
+
                     amountLeft = howManyPlyrMoves;
                 }
+                if (x == player.x && y == player.y)
+                {
+                    Attacking();
+                }
+                if (attacked)
+                {
+                    TakeDamage();
+                }
             }
-            Defeated();
+            
+            
+            
+
+        }
+        public override void IsPlayerNear()
+        {
+            int nearUp = y - 1;
+            int nearDown = y + 1;
+            int nearLeft = x - 1;
+            int nearRight = x + 1;
+
+            if (nearLeft == player.x && y == player.y || nearRight == player.x && y == player.y || x == player.x && nearUp == player.y || nearDown == player.y && x == player.x)
+            {
+            }
+        }
+        public override void TakeDamage()
+        {
+            health -= player.currentplayerDamage;
+
+            if (health <= 0)
+            {
+                sprite = "k";
+                dead = true;
+                return;
+            }
+        }
+        public override void Attacking()
+        {
+
+            currentEnemyDamage = 10;
+
+            player.TakeDamage(currentEnemyDamage);
+            x = previousX;
+            y = previousY;
 
         }
     }
