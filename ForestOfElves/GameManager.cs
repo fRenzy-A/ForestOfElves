@@ -11,46 +11,49 @@ namespace ForestOfElves
 {
     internal class GameManager
     {
-        
+        static Random random = new Random();
         static Map map = new Map();
         static UserInput input = new UserInput();
         static Character character = new Character();
         static Player player = new Player(map,input);
-        static Grunt grunt = new Grunt();
-        static Enemy enemy = new Enemy(player,map, character);
-        static HUD HUD = new HUD(player,enemy, map);
+        //static Enemy enemy = new Enemy(player,map);
+        static Grunt grunt = new Grunt(player,map,random);
+        static Grunt grunt1 = new Grunt(player, map,random);
+        static HUD HUD = new HUD(player, map);
         static Items items = new Items(player);
 
+
+        public void OnStart()
+        {
+
+        }
         public void GameUpdate()
         {
             while (true)
             {
+                input.Input();
                 map.MapDisplay();
                 
-                player.Update(enemy.inBattle,enemy.currentEnemyDamage);
-                enemy.Update(); 
+                for (int i = 0; i < 3; i++)
+                {
+                    
+                }
+
+                player.Update();
+                grunt.Update();
+                //grunt1.Update();
                 items.Update();
                 player.Draw();
-                enemy.Draw();
+                grunt.Draw();
+               // grunt1.Draw();
 
 
                 HUD.MainHUD();
-                input.Input();
+                
                 //Thread.Sleep(2000);
 
             }
             
-        }
-
-        public void EnemyKilled()
-        {           
-            if (player.playerX == enemy.enemyX && player.playerY == enemy.enemyY)
-            {
-                enemy.dead = true;
-                Console.SetCursorPosition(25, 25);
-                Console.WriteLine("dead");
-                enemy.sprite = "<";
-            }        
         }
         
     }

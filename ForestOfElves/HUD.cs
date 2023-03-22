@@ -16,10 +16,10 @@ namespace ForestOfElves
 
         static int x;
         static int y;
-        public HUD(Player player,Enemy enemy, Map map)
+        public HUD(Player player, Map map)
         {
             this.player = player;
-            this.enemy = enemy;
+            //this.enemy = enemy;
             this.map = map;
         }
         public void MainHUD()
@@ -41,13 +41,13 @@ namespace ForestOfElves
             {              
                 Console.WriteLine("| | No Key");
             }
-            BattleInfo();
+            //BattleInfo();
         }
 
         void BattleInfo()
         {
             
-            if (enemy.inBattle)
+            if (player.inBattle)
             {
                 Console.WriteLine("Enemy HP: " + enemy.health + "    ");
                 if (enemy.health == 0)

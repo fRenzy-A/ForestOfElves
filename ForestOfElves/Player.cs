@@ -34,7 +34,9 @@ namespace ForestOfElves
         public int howManyPotions;
         public int howManyShields;
 
-        
+        public bool inBattle = false;
+
+
 
         //public Player() // constructor
         //{
@@ -45,14 +47,16 @@ namespace ForestOfElves
         {
             this.map = map;
             this.input = input;
+            
         }
         
-        public void Update(bool enemyAttacked,int howMuchDmg)
+        public void Update()
         {
             attacking = false;
-            if (enemyAttacked)
+            IsPlayerNear();
+            if (inBattle)
             {
-                IsDamaged(howMuchDmg);
+                IsDamaged();
                 InBattle();
                 UsePotAndHeal(50);
                 UsePartsAndRepair(25);
@@ -64,9 +68,9 @@ namespace ForestOfElves
         {
             whereIs(playerX, playerY, "X");
         }
-        public void IsDamaged(int howMuchDmg)
+        public void IsDamaged()
         {
-            health -= howMuchDmg;
+            health -= 10;
         }
 
         public void UsePotAndHeal(int howMuch)
@@ -132,6 +136,18 @@ namespace ForestOfElves
                 playerX = previousPlayerX;
                 playerY = previousPlayerY;
             }          
+        }
+        public void IsPlayerNear()
+        {
+            int nearUp = playerY - 1;
+            int nearDown = playerY + 1;
+            int nearLeft = playerX - 1;
+            int nearRight = playerX + 1;
+
+            if (nearLeft == Enemy.enemyX && playerY == Enemy.enemyY || nearRight == Enemy.enemyX && playerY == Enemy.enemyY || playerX == Enemy.enemyX && nearUp == Enemy.enemyY || nearDown == Enemy.enemyX && playerY == Enemy.enemyY)
+            {
+                inBattle = true;
+            }
         }
         public void InBattle()
         {

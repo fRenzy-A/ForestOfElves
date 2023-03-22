@@ -8,56 +8,50 @@ using System.Threading.Tasks;
 
 namespace ForestOfElves
 {
-    public class Enemy
+    internal class Enemy
     {
         Map map;
         //Player player = new Player(); // a new player! uh-oh!!
         Player player; // reference to the player
-        Character character;
         static Random random = new Random();
 
-        public string sprite = "G";
+        public string sprite;
 
-        public int enemyX = 12;
-        public int enemyY = 12;
+        public static int enemyX;
+        public static int enemyY;
 
         public int health = 100;
 
         public int previousEnemyX;
         public int previousEnemyY;
 
-        public bool dead;
-        public bool inBattle = false;
         public bool attacked;
         
         public int currentEnemyDamage;
+        public int currentAttackChance;
 
-        public Enemy(Player player, Map map, Character character) // constructor
+        public int howManyPlyrMoves;
+        public int amountLeft;
+        public Enemy(Player player, Map map) // constructor
         {
             this.player = player;
-            this.map = map;
-            this.character = character;
+            this.map = map;   
         }
 
-
-        public void Update()
+        public virtual void Update()
         {
-            
-            attacked = false;
 
-            IsPlayerNear();
-            if (inBattle)
-            {
-                IsBeingAttacked();
-                Attacking(6);
-                
-            }
-            else Move();
-            Defeated();
-        }    
+        }
+          
         public void Draw()
         {
-            character.whereIs(enemyX, enemyY, sprite);
+            whereIs(enemyX, enemyY, sprite);
+        }
+        public void whereIs(int x, int y, string character)
+        {
+            Console.CursorVisible = false;
+            Console.SetCursorPosition(x, y);
+            Console.Write(character);
         }
         public void Move()
         {
@@ -109,38 +103,16 @@ namespace ForestOfElves
             else currentEnemyDamage = 0;
 
         }
-        public void IsPlayerNear()
-        {
-            int nearUp = enemyY - 1;
-            int nearDown = enemyY + 1;
-            int nearLeft = enemyX - 1;
-            int nearRight = enemyX + 1;
-
-            if (enemyX == player.playerX && nearUp == player.playerY)
-            {
-                inBattle = true;
-            }
-            else if (enemyX == player.playerX && nearDown == player.playerY)
-            {
-                inBattle = true;
-            }
-            else if (nearLeft == player.playerX && enemyY == player.playerY)
-            {
-                inBattle = true;
-            }
-            else if (nearRight == player.playerX && enemyY == player.playerY)
-            {
-                inBattle = true;
-            }            
-        }
+        
         public void Defeated()
         {
             if (health == 0)
             {
                 sprite = "";
-                inBattle = false;
+                player.inBattle = false;
+                return;
             }
-            return;
+            
         }
     }
 }

@@ -13,7 +13,7 @@ namespace ForestOfElves
         public bool DOWN;
         public bool LEFT;
         public bool RIGHT;
-        public string playerInput;
+        ConsoleKeyInfo playerInput = Console.ReadKey(true);
 
         public void Input()
         {
@@ -22,7 +22,7 @@ namespace ForestOfElves
             DOWN = false;
             LEFT = false;
             RIGHT = false;
-            ConsoleKeyInfo playerInput = Console.ReadKey(true);
+            
 
 
 
