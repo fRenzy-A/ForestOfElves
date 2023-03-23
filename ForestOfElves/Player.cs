@@ -13,17 +13,25 @@ namespace ForestOfElves
         
         Map map;
         UserInput input;
+        //Enemy enemy;
 
         public int health = 100;
         public int shield = 50;
+        public int usePot = 50;
+        public int usePart = 25;
+
 
         public int x = 7;
         public int y = 4;
 
         public int dx;
         public int dy;
-        public int ndx;
-        public int ndy;
+
+        public int targetPosX;
+        public int targetPosY;  
+
+        public int enemyX;
+        public int enemyY;
 
         public int previousX;
         public int previousY;
@@ -41,32 +49,29 @@ namespace ForestOfElves
         public int howManyShields;
 
 
-
-        //public Player() // constructor
-        //{
-        //    Console.WriteLine("Player class instantiated...");
-        //    Console.ReadKey();
-        //}
         public Player(Map map, UserInput input)
         {
             this.map = map;
-            this.input = input;
-            
-        }
-        public void OnStart()
-        {
 
+            this.input = input; 
         }
-        public void Update(int enemyX,int enemyY, Enemy enemy)
+
+        public void Update(EnemyManager enemyManager)
         {
             attacking = false;
-            Moving();
+            Input();
 
-            if (x == enemyX && y == enemyY && !enemy.dead)
+            if (map.WallChecker(targetPosX, targetPosY)) return;
+
+            if (enemyManager.IsEnemyAt(targetPosX, targetPosY))
             {
-                Attack(enemy);
+                Enemy enemy = new EnemyManager(map).GetEnemyAt(targetPosX, targetPosY); 
+                
+                enemy.TakeDamage();
                 enemy.attacked = true;
             }
+
+            else Moving();
         }
 
         public void Draw()
@@ -78,13 +83,20 @@ namespace ForestOfElves
             health -= enemyDamage;
         }
 
-        public void Attack(Enemy enemy)
-        {            
-            enemy.TakeDamage();
-            x = previousX;
-            y = previousY;
+        public bool IsPlayerAt(int enX, int enY)
+        {
+            if (x == enX && y == enY)
+            {
+                return true;
+            }
+            return false;
         }
-        public void UsePotAndHeal(int howMuch)
+
+        public void Attack()
+        {            
+            
+        }
+        public void UsePotAndHeal(int howMuch,int hp)
         {
             if (healing)
             {
@@ -95,11 +107,15 @@ namespace ForestOfElves
                 else
                 {
                     howManyPotions--;
-                    health += howMuch;
+                    hp += howMuch;
+                    if (health < 100)
+                    {
+                        hp = 100;
+                    }
                 }                
             }
         }
-        public void UsePartsAndRepair(int howMuch)
+        public void UsePartsAndRepair(int howMuch, int sh)
         {
             if (repairing)
             {
@@ -111,6 +127,10 @@ namespace ForestOfElves
                 {
                     howManyShields--;
                     shield += howMuch;
+                    if (sh < 50)
+                    {
+                        sh = shield;
+                    }
                 }                
             }
         }
@@ -118,58 +138,35 @@ namespace ForestOfElves
         {
             if (input.UP)
             {
-                ndy = y - 1;
+                dx = 0;
+                dy = -1;
+                //ndy = y - 1; 
             }
             if (input.LEFT)
             {
-                ndx = x - 1;
+                dx = -1;
+                dy = 0;
+                //ndx = x - 1;
             }
             if (input.DOWN)
             {
-                dy = y + 1;
+                dx = 0;
+                dy = 1;     
+                //dy = y + 1;
             }
             if (input.RIGHT)
             {
-                dx = x + 1;
+                dx = 1;
+                dy = 0;
+                //dx = x + 1;
             }
-            dx = x + 1;
-            dy = y + 1;
-            ndx = x - 1;
-            ndy = y - 1;
+            targetPosX = x + dx;
+            targetPosY = y + dy;
         }
         public void Moving()
         {
-            previousX = x;
-            previousY = y;
-            
-
-            if (input.UP)
-            {
-                y--;
-            }
-            if (input.LEFT)
-            {
-                x--;
-            }
-            if (input.DOWN)
-            {
-                y++;
-            }
-            if (input.RIGHT)
-            {
-                x++;
-            }
-            bool wallchecker = map.WallChecker(x, y);
-            if (wallchecker)
-            {
-                x = previousX;
-                y = previousY;
-            }
-            if (hasKey == 0 && map.publicMap[y,x] == "I")
-            {
-                x = previousX;
-                y = previousY;
-            }          
+            x = targetPosX;
+            y = targetPosY;
         }
         
         public void InBattle()

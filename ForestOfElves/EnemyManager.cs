@@ -8,47 +8,59 @@ namespace ForestOfElves
 {
     internal class EnemyManager
     {
-        Player player;
         Map map;
-        Random random;
-        public Enemy enemy;
-
-        public List<Enemy> grunts;
-        public EnemyManager(Player player,Map map, Random random)
+        //give enemy manager player coordinates. let enemy manager check which enemy is being specifically attacked
+        List<Enemy> grunts;
+        //Enemy[] enemy = new Enemy[]; 
+        public EnemyManager(Map map)
         {
-            this.player = player;
+            grunts = new List<Enemy>();
             this.map = map;
-            this.random = random;
-            //this.enemy = enemy;
-            //new Grunt(player, map);
-            
-
-
+            /*this.player = player;
+            this.map = map;
+            this.random = random;*/
         }
+        
         
         public void Start()
         {
-            grunts = new List<Enemy>()
-            {
-                new Grunt(player,map,random),
-                new Grunt(player,map,random),
-                new Grunt(player,map,random),
-                new Grunt(player,map,random),
-                new Grunt(player,map,random)
-            };
+            grunts.Add(new Grunt(map));
             foreach (Enemy grunt in grunts)
-            {
-                enemy = grunt;
+            {                
                 grunt.Start();
             }
         }
 
         public void Update()
+        {            
+            foreach (Enemy grunt in grunts)
+            {
+                grunt.Update();           
+            }          
+        }
+        public bool IsEnemyAt(int playerX, int playerY)
         {
             foreach (Enemy grunt in grunts)
             {
-                grunt.Update();
-            }          
+                if (playerX == grunt.x && playerY == grunt.y)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        public Enemy GetEnemyAt(int playerX, int playerY)
+        {
+            foreach (Enemy grunt in grunts)
+            {
+                if (playerX == grunt.x && playerY == grunt.y)
+                {
+                    return grunt;   
+                }                
+            }
+            
+            return null;
         }
         public void Draw()
         {

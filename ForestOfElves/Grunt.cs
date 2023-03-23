@@ -9,34 +9,31 @@ namespace ForestOfElves
 {
     internal class Grunt : Enemy
     {
-        Player player;
-        Random random;
         Map map;
-        public Grunt(Player player, Map map, Random random) : base(player,map,random) 
+        Player player;
+        public bool isdead;
+        public Grunt(Map map) : base(map) 
         {
-            this.random = random;
-            this.player = player;
             this.map = map;
+            UserInput input = new UserInput();
+            player = new Player(map,input);
+            x = 12;
+            y = 12;
             sprite = "G";
             howManyPlyrMoves = 2;
             amountLeft = howManyPlyrMoves;
             currentAttackChance = 6;
+            isdead = false;
             
             
             //this.random = random;
         }
         public override void Start()
         {
-            x = 12;
-            y = 12;
             attacked = false;
-            dead = false;
         }
         public override void Update()
         {
-            
-            previousX = x;
-            previousY = y;
             attacked = false;
             //IsPlayerNear();
             amountLeft -= 1;
@@ -45,21 +42,23 @@ namespace ForestOfElves
                 return;
             }
             else
-            {
+            {      
                 if (amountLeft == 0)
                 {
                     Move();
 
+                    if (map.WallChecker(targetPosX, targetPosY)) return;
+
+                    if (player.IsPlayerAt(targetPosX, targetPosY))
+                    {
+                        Attacking();
+                    }
+                    x = targetPosX;
+                    y = targetPosY;
+
                     amountLeft = howManyPlyrMoves;
                 }
-                if (x == player.x && y == player.y)
-                {
-                    Attacking();
-                }
-                if (attacked)
-                {
-                    TakeDamage();
-                }
+                
             }
             
         }
@@ -69,42 +68,34 @@ namespace ForestOfElves
         }
         public override void Move()
         {
-
-            int move = random.Next(1, 5);
+            Random random = new Random();
+            int move = random.Next(1, 4);
             if (move == 1)
             {
-                x--;
+                dx = 0;
+                dy = -1;
+                //ndy = y - 1; 
             }
             if (move == 2)
             {
-                x++;
+                dx = -1;
+                dy = 0;
+                //ndx = x - 1;
             }
             if (move == 3)
             {
-                y--;
+                dx = 0;
+                dy = 1;
+                //dy = y + 1;
             }
             if (move == 4)
             {
-                y++;
+                dx = 1;
+                dy = 0;
+                //dx = x + 1;
             }
-            bool wallchecker = map.WallChecker(x, y);
-            if (wallchecker)
-            {
-                x = previousX;
-                y = previousY;
-            }
-
-        }
-        public override void IsPlayerNear()
-        {
-            int nearUp = y - 1;
-            int nearDown = y + 1;
-            int nearLeft = x - 1;
-            int nearRight = x + 1;
-
-            if (nearLeft == player.x && y == player.y || nearRight == player.x && y == player.y || x == player.x && nearUp == player.y || nearDown == player.y && x == player.x)
-            {
-            }
+            targetPosX = x + dx;
+            targetPosY = y + dy;
         }
         public override void TakeDamage()
         {
@@ -113,8 +104,7 @@ namespace ForestOfElves
             if (health <= 0)
             {
                 sprite = "k";
-                dead = true;
-                
+                dead = true;               
             }
             return;
         }
@@ -124,8 +114,6 @@ namespace ForestOfElves
             currentEnemyDamage = 10;
 
             player.TakeDamage(currentEnemyDamage);
-            x = previousX;
-            y = previousY;
 
         }
     }

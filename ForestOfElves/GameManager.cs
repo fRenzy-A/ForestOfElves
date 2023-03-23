@@ -11,32 +11,41 @@ namespace ForestOfElves
 {
     internal class GameManager
     {
-        static Random random = new Random();
-        static Map map = new Map();
-        static UserInput input = new UserInput();
-        static Character character = new Character();
-        static Player player = new Player(map,input);
-        static Grunt grunt = new Grunt(player, map, random);
-        
-        static EnemyManager enemies = new EnemyManager(player,map,random);
-        
-        static HUD HUD = new HUD(player, map);
-        static Items items = new Items(player);
+        public Map map;
+        public UserInput input;
+        public Player player;
+        //public Enemy enemy;
+        public EnemyManager enemies;
 
-        
+        public HUD HUD;
+        public Items items;
+
+        public GameManager()
+        {
+            map = new Map();
+            input = new UserInput();
+            player = new Player(map,input);
+            //enemy = new Enemy(map,player);
+
+            enemies = new EnemyManager(map);
+
+            HUD = new HUD(player, map);
+            items = new Items(player);
+        }
         public void GameUpdate()
         {
             OnStart();
             while (true)
             {
+
                 map.MapDisplay();
 
-                player.Update(enemies.enemy.x,enemies.enemy.y,enemies.enemy);
+                player.Update(enemies);
                 enemies.Update();
                 //items.Update();
                 player.Draw();
                 enemies.Draw();
-                
+
 
 
                 HUD.MainHUD();
@@ -44,11 +53,15 @@ namespace ForestOfElves
                 //Thread.Sleep(2000);
 
             }
-            
+
         }
         public void OnStart()
         {
             enemies.Start();
         }
+
+
+
+
     }
 }

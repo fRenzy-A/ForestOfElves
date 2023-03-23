@@ -14,11 +14,17 @@ namespace ForestOfElves
         //Player player = new Player(); // a new player! uh-oh!!
         Player player; // reference to the player
         Random random;
-
+        
         public string sprite;
 
         public int x;
-        public int y; 
+        public int y;
+
+        public int dx;
+        public int dy;
+
+        public int targetPosX;
+        public int targetPosY;
 
         public int health = 100;
 
@@ -37,11 +43,9 @@ namespace ForestOfElves
 
         
 
-        public Enemy(Player player, Map map,Random random) // constructor
+        public Enemy(Map map) // constructor
         {
-            this.player = player;
             this.map = map;
-            this.random = random;
         }
         public virtual void Start()
         {
@@ -86,14 +90,7 @@ namespace ForestOfElves
 
         public virtual void TakeDamage()
         {           
-            /*health -= player.currentplayerDamage;        
 
-            if (health <= 0)
-            {
-                sprite = "k";
-                dead = true;
-                return;
-            }*/
         } 
         public virtual void Attacking()
         {
