@@ -9,14 +9,14 @@ namespace ForestOfElves
     internal class HUD
     {
         Player player;
-        EnemyManager enemy;
+        Enemy enemy;
         Map map;
 
         int removeDelay = 3;
 
         static int x;
         static int y;
-        public HUD(Player player, Map map, EnemyManager enemy)
+        public HUD(Player player, Map map)
         {
             this.player = player;
             this.enemy = enemy;
@@ -42,7 +42,7 @@ namespace ForestOfElves
                 Console.WriteLine("| | No Key");
             }
             //BattleInfo();
-            //Console.WriteLine(enemy.attacked);
+//Console.WriteLine(enemy.attacked);
         }
 
         /*void BattleInfo()

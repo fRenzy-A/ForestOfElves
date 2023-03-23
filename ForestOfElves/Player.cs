@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using System.Security.Policy;
 using System.Text;
 using System.Threading.Tasks;
@@ -52,13 +53,16 @@ namespace ForestOfElves
             this.input = input;
             
         }
+        public void OnStart()
+        {
 
-        public void Update(int enemyX, int enemyY, Enemy enemy)
+        }
+        public void Update(int enemyX,int enemyY, Enemy enemy)
         {
             attacking = false;
             Moving();
 
-            if (enemyX == x && enemyY == y && !enemy.dead)
+            if (x == enemyX && y == enemyY && !enemy.dead)
             {
                 Attack(enemy);
                 enemy.attacked = true;
@@ -75,8 +79,7 @@ namespace ForestOfElves
         }
 
         public void Attack(Enemy enemy)
-        {
-            
+        {            
             enemy.TakeDamage();
             x = previousX;
             y = previousY;

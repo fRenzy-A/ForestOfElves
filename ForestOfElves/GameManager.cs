@@ -16,29 +16,24 @@ namespace ForestOfElves
         static UserInput input = new UserInput();
         static Character character = new Character();
         static Player player = new Player(map,input);
-        Enemy enemy = new Grunt(player, map);
+        static Grunt grunt = new Grunt(player, map, random);
+        
         static EnemyManager enemies = new EnemyManager(player,map,random);
         
-        static HUD HUD = new HUD(player, map,enemies);
+        static HUD HUD = new HUD(player, map);
         static Items items = new Items(player);
 
-        public GameManager()
-        {
-            
-        }
-        public void OnStart()
-        {
-
-        }
+        
         public void GameUpdate()
         {
+            OnStart();
             while (true)
             {
                 map.MapDisplay();
 
-                player.Update(enemy.x,enemy.y,enemy);
+                player.Update(enemies.enemy.x,enemies.enemy.y,enemies.enemy);
                 enemies.Update();
-                items.Update();
+                //items.Update();
                 player.Draw();
                 enemies.Draw();
                 
@@ -51,6 +46,9 @@ namespace ForestOfElves
             }
             
         }
-        
+        public void OnStart()
+        {
+            enemies.Start();
+        }
     }
 }

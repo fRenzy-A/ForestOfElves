@@ -13,12 +13,12 @@ namespace ForestOfElves
         Map map;
         //Player player = new Player(); // a new player! uh-oh!!
         Player player; // reference to the player
-        static Random random = new Random();
+        Random random;
 
         public string sprite;
 
         public int x;
-        public int y;
+        public int y; 
 
         public int health = 100;
 
@@ -33,27 +33,32 @@ namespace ForestOfElves
         public int howManyPlyrMoves;
         public int amountLeft;
 
-        public bool dead = false;
+        public bool dead;
 
-        public Enemy(Player player, Map map) // constructor
+        
+
+        public Enemy(Player player, Map map,Random random) // constructor
         {
             this.player = player;
-            this.map = map;   
+            this.map = map;
+            this.random = random;
         }
+        public virtual void Start()
+        {
 
+        }
         public virtual void Update()
         {
+            
+        }
+        public virtual void Draw()
+        {
+            //whereIs(x, y, sprite);
+        }
+        public virtual void Move()
+        {
 
-        }
-        public void Draw()
-        {
-            whereIs(x, y, sprite);
-        }
-        public void Move()
-        {
-            previousX = x;
-            previousY = y;
-            int move = random.Next(1, 5);
+            /*int move = random.Next(1, 5);
             if (move == 1)
             {
                 x--;
@@ -75,15 +80,10 @@ namespace ForestOfElves
             {
                 x = previousX;
                 y = previousY;
-            }
+            }*/
 
         }
 
-        public void Combat()
-        {
-            TakeDamage();
-            Attacking();
-        }
         public virtual void TakeDamage()
         {           
             /*health -= player.currentplayerDamage;        

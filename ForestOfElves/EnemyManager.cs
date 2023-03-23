@@ -10,39 +10,51 @@ namespace ForestOfElves
     {
         Player player;
         Map map;
-        Grunt grunt;
-        Enemy enemy;    
         Random random;
+        public Enemy enemy;
 
-        List<Enemy> enemies = new List<Enemy>();
-
-        public EnemyManager(Player player, Map map,Random random)
+        public List<Enemy> grunts;
+        public EnemyManager(Player player,Map map, Random random)
         {
-            
             this.player = player;
             this.map = map;
             this.random = random;
-            this.enemy = enemy;
+            //this.enemy = enemy;
             //new Grunt(player, map);
+            
 
-            enemies.Add(new Grunt(player,map)); 
-            //enemies.Add(new Grunt(player, map, random));
+
         }
         
-
+        public void Start()
+        {
+            grunts = new List<Enemy>()
+            {
+                new Grunt(player,map,random),
+                new Grunt(player,map,random),
+                new Grunt(player,map,random),
+                new Grunt(player,map,random),
+                new Grunt(player,map,random)
+            };
+            foreach (Enemy grunt in grunts)
+            {
+                enemy = grunt;
+                grunt.Start();
+            }
+        }
 
         public void Update()
-        {         
-            foreach (Enemy enemy in enemies)
+        {
+            foreach (Enemy grunt in grunts)
             {
-                enemy.Update();
+                grunt.Update();
             }          
         }
         public void Draw()
         {
-            foreach (Enemy enemy in enemies)
+            foreach (Enemy grunt in grunts)
             {
-                enemy.Draw();
+                grunt.Draw();
             }
         }
 

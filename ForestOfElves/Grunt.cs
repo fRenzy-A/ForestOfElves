@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -9,22 +10,33 @@ namespace ForestOfElves
     internal class Grunt : Enemy
     {
         Player player;
-        //Random random;
+        Random random;
         Map map;
-        public Grunt(Player player, Map map) : base(player,map) 
+        public Grunt(Player player, Map map, Random random) : base(player,map,random) 
         {
-            //this.random = random;
+            this.random = random;
             this.player = player;
+            this.map = map;
             sprite = "G";
-            x = 12;
-            y = 12;
             howManyPlyrMoves = 2;
             amountLeft = howManyPlyrMoves;
             currentAttackChance = 6;
+            
+            
             //this.random = random;
+        }
+        public override void Start()
+        {
+            x = 12;
+            y = 12;
+            attacked = false;
+            dead = false;
         }
         public override void Update()
         {
+            
+            previousX = x;
+            previousY = y;
             attacked = false;
             //IsPlayerNear();
             amountLeft -= 1;
@@ -50,8 +62,37 @@ namespace ForestOfElves
                 }
             }
             
-            
-            
+        }
+        public override void Draw()
+        {
+            whereIs(x, y, sprite);
+        }
+        public override void Move()
+        {
+
+            int move = random.Next(1, 5);
+            if (move == 1)
+            {
+                x--;
+            }
+            if (move == 2)
+            {
+                x++;
+            }
+            if (move == 3)
+            {
+                y--;
+            }
+            if (move == 4)
+            {
+                y++;
+            }
+            bool wallchecker = map.WallChecker(x, y);
+            if (wallchecker)
+            {
+                x = previousX;
+                y = previousY;
+            }
 
         }
         public override void IsPlayerNear()
@@ -73,8 +114,9 @@ namespace ForestOfElves
             {
                 sprite = "k";
                 dead = true;
-                return;
+                
             }
+            return;
         }
         public override void Attacking()
         {
