@@ -17,8 +17,8 @@ namespace ForestOfElves
         
         public string sprite;
 
-        public int x;
-        public int y;
+        public int x { get; set; }
+        public int y { get; set; }
 
         public int dx;
         public int dy;
@@ -26,15 +26,12 @@ namespace ForestOfElves
         public int targetPosX;
         public int targetPosY;
 
-        public int health = 100;
-
-        public int previousX;
-        public int previousY;
+        public int health;
+        public int decay;
 
         public bool attacked;
         
-        public int currentEnemyDamage;
-        public int currentAttackChance;
+        public int currentEnemyDamage; // how many player moves until it can do an action
 
         public int howManyPlyrMoves;
         public int amountLeft;
@@ -43,11 +40,11 @@ namespace ForestOfElves
 
         
 
-        public Enemy(Map map) // constructor
+        public Enemy(Map map, Random random,Player player) // constructor
         {
             this.map = map;
         }
-        public virtual void Start()
+        public virtual void OnStart()
         {
 
         }
@@ -57,35 +54,12 @@ namespace ForestOfElves
         }
         public virtual void Draw()
         {
-            //whereIs(x, y, sprite);
         }
-        public virtual void Move()
+        public virtual void GoingTo() //Where does it want to move
         {
-
-            /*int move = random.Next(1, 5);
-            if (move == 1)
-            {
-                x--;
-            }
-            if (move == 2)
-            {
-                x++;
-            }
-            if (move == 3)
-            {
-                y--;
-            }
-            if (move == 4)
-            {
-                y++;
-            }
-            bool wallchecker = map.WallChecker(x, y);
-            if (wallchecker)
-            {
-                x = previousX;
-                y = previousY;
-            }*/
-
+        }
+        public virtual void Move() // Moving to where it wants to move
+        {
         }
 
         public virtual void TakeDamage()
@@ -94,13 +68,6 @@ namespace ForestOfElves
         } 
         public virtual void Attacking()
         {
-      
-            /*currentEnemyDamage = 10;
-
-            player.TakeDamage(currentEnemyDamage);
-            x = previousX;
-            y = previousY;
-            */
         }
         
         public virtual void IsPlayerNear()

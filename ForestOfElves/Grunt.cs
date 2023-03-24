@@ -11,51 +11,56 @@ namespace ForestOfElves
     {
         Map map;
         Player player;
-        public bool isdead;
-        public Grunt(Map map) : base(map) 
-        {
+        Random random;
+ 
+        public Grunt(Map map,Random random,Player player) : base(map, random,player) 
+        {        
             this.map = map;
+            this.random = random;
+            this.player = player;
             UserInput input = new UserInput();
-            player = new Player(map,input);
-            x = 12;
-            y = 12;
+            health = 100;
             sprite = "G";
-            howManyPlyrMoves = 2;
+            decay = 5;
+            howManyPlyrMoves = 2; // how many player moves until it can do an action
             amountLeft = howManyPlyrMoves;
-            currentAttackChance = 6;
-            isdead = false;
-            
-            
-            //this.random = random;
+
+            currentEnemyDamage = 10;
+
         }
-        public override void Start()
+        public override void OnStart()
         {
-            attacked = false;
         }
         public override void Update()
         {
             attacked = false;
-            //IsPlayerNear();
             amountLeft -= 1;
             if (dead)
-            {
-                return;
+            {             
+                decay--;
+                if (decay == 0)
+                {
+                    sprite = "";
+                    return;
+                }
+                
             }
             else
             {      
-                if (amountLeft == 0)
+                if (amountLeft == 0) 
                 {
-                    Move();
+                    GoingTo();
 
-                    if (map.WallChecker(targetPosX, targetPosY)) return;
+                    if (map.IsWallAt(targetPosX, targetPosY)) return;
 
                     if (player.IsPlayerAt(targetPosX, targetPosY))
                     {
                         Attacking();
                     }
-                    x = targetPosX;
-                    y = targetPosY;
-
+                    else
+                    {
+                       Move();
+                    }
                     amountLeft = howManyPlyrMoves;
                 }
                 
@@ -64,12 +69,12 @@ namespace ForestOfElves
         }
         public override void Draw()
         {
-            whereIs(x, y, sprite);
+            WhereIs(x, y, sprite);
         }
-        public override void Move()
+        public override void GoingTo()
         {
-            Random random = new Random();
-            int move = random.Next(1, 4);
+            
+            int move = random.Next(1, 5);
             if (move == 1)
             {
                 dx = 0;
@@ -97,6 +102,11 @@ namespace ForestOfElves
             targetPosX = x + dx;
             targetPosY = y + dy;
         }
+        public override void Move()
+        {
+            x = targetPosX;
+            y = targetPosY;
+        }
         public override void TakeDamage()
         {
             health -= player.currentplayerDamage;
@@ -111,10 +121,8 @@ namespace ForestOfElves
         public override void Attacking()
         {
 
-            currentEnemyDamage = 10;
-
+            
             player.TakeDamage(currentEnemyDamage);
-
         }
     }
 }

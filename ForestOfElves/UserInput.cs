@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -13,6 +14,8 @@ namespace ForestOfElves
         public bool DOWN;
         public bool LEFT;
         public bool RIGHT;
+        public bool USEPOT;
+        public bool USEPART;
         
 
         public void Input()
@@ -22,6 +25,8 @@ namespace ForestOfElves
             DOWN = false;
             LEFT = false;
             RIGHT = false;
+            USEPOT = false;
+            USEPART = false;
             
 
 
@@ -39,6 +44,12 @@ namespace ForestOfElves
                     break;
                 case ConsoleKey.D:
                     RIGHT = true;
+                    break;
+                case ConsoleKey.J:
+                    USEPOT = true;
+                    break;
+                case ConsoleKey.L:
+                    USEPART = true;
                     break;
             }
             

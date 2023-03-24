@@ -25,21 +25,28 @@ namespace ForestOfElves
         public void MainHUD()
         {
             
-            
+
             x = 0;
             y = map.publicMap.GetLength(0);
             Console.SetCursorPosition(x,y);
             Console.WriteLine("-------------------------------------------------------------");
             Console.WriteLine("Health |H|: " + player.health + "     ");
             Console.WriteLine("Shield |S|: " + player.shield + "     ");
-            if (player.hasKey == 1)
+            Console.WriteLine("HealthPotions: " + player.howManyPotions + "   ");
+            Console.WriteLine("ShieldParts: " + player.howManyShields + "   ");
+            if (player.keyParts == 1)
             {
-                Console.SetCursorPosition(0,Console.CursorTop);
-                Console.WriteLine("|K| Key             ");
+                //Console.SetCursorPosition(0,Console.CursorTop);
+                Console.Write("|^| Half Key             ");
             }
-            else
+            if (player.keyParts == 2)
+            {
+                //Console.SetCursorPosition(0, Console.CursorTop);
+                Console.Write("|K| Key             ");
+            }
+            if (player.keyParts == 0)
             {              
-                Console.WriteLine("| | No Key");
+                Console.Write("| | No Key");
             }
             //BattleInfo();
 //Console.WriteLine(enemy.attacked);

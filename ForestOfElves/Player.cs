@@ -13,6 +13,7 @@ namespace ForestOfElves
         
         Map map;
         UserInput input;
+        Random random;
         //Enemy enemy;
 
         public int health = 100;
@@ -21,66 +22,75 @@ namespace ForestOfElves
         public int usePart = 25;
 
 
-        public int x = 7;
-        public int y = 4;
-
+        public int x = 10;
+        public int y = 5;
+        
+        //deltas
         public int dx;
         public int dy;
 
         public int targetPosX;
         public int targetPosY;  
 
-        public int enemyX;
-        public int enemyY;
-
-        public int previousX;
-        public int previousY;
-
-        public int hasKey = 0;
 
         public bool attacking;
-        public bool healing;
-        public bool repairing;
-        public bool blockDamage;
 
         public int currentplayerDamage = 50;
 
         public int howManyPotions;
         public int howManyShields;
+        public int keyParts;
 
 
-        public Player(Map map, UserInput input)
+        public Player(Map map, UserInput input, Random random)
         {
             this.map = map;
-
             this.input = input; 
+            this.random = random;  
         }
 
         public void Update(EnemyManager enemyManager)
         {
             attacking = false;
-            Input();
-
-            if (map.WallChecker(targetPosX, targetPosY)) return;
-
-            if (enemyManager.IsEnemyAt(targetPosX, targetPosY))
+            Input();//where movement is calculated
+            
+            if (map.IsWallAt(targetPosX, targetPosY)) return;//checks for walls
+            if (keyParts < 2)//checks to see how many keys player has
             {
-                Enemy enemy = new EnemyManager(map).GetEnemyAt(targetPosX, targetPosY); 
-                
-                enemy.TakeDamage();
-                enemy.attacked = true;
+                if (map.IsDoorAt(targetPosX, targetPosY)) return;//checks for doors
+            }
+            
+
+            if (enemyManager.IsEnemyAt(targetPosX, targetPosY))//checks for enemies
+            {
+                Enemy enemy = enemyManager.GetEnemyAt(targetPosX, targetPosY); 
+                if (!enemy.dead) // if enemy isnt dead
+                {
+                    Attack(enemy);
+                }
+                else MovePlayer(); // in order to move in invisible corpses
             }
 
-            else Moving();
+            else MovePlayer();//when all above are false
         }
 
         public void Draw()
         {
-            whereIs(x, y, "X");
+            WhereIs(x, y, "X");
         }
         public void TakeDamage(int enemyDamage)
         {
-            health -= enemyDamage;
+            shield -= enemyDamage;
+            if (shield < enemyDamage) //spillover
+            {
+                health = (health + shield) - enemyDamage;
+                shield = 0;
+
+            }
+            if (shield == 0)
+            {
+                health -= enemyDamage;
+            }
         }
 
         public bool IsPlayerAt(int enX, int enY)
@@ -92,46 +102,40 @@ namespace ForestOfElves
             return false;
         }
 
-        public void Attack()
-        {            
-            
+        public void Attack(Enemy enemy)
+        {
+            enemy.TakeDamage();
         }
         public void UsePotAndHeal(int howMuch,int hp)
         {
-            if (healing)
+            if (howManyPotions == 0)
             {
-                if (howManyPotions == 0)
+                return;
+            }
+            else
+            {
+                howManyPotions--;
+                hp += howMuch;
+                if (health < 100)
                 {
-                    return;
+                    health = 100;
                 }
-                else
-                {
-                    howManyPotions--;
-                    hp += howMuch;
-                    if (health < 100)
-                    {
-                        hp = 100;
-                    }
-                }                
             }
         }
         public void UsePartsAndRepair(int howMuch, int sh)
         {
-            if (repairing)
+            if (howManyShields == 0)
             {
-                if (howManyShields == 0)
+                return;
+            }
+            else
+            {
+                howManyShields--;
+                shield += howMuch;
+                if (sh < 50)
                 {
-                    return ;
+                    shield = 50;
                 }
-                else
-                {
-                    howManyShields--;
-                    shield += howMuch;
-                    if (sh < 50)
-                    {
-                        sh = shield;
-                    }
-                }                
             }
         }
         public void Input()
@@ -140,53 +144,37 @@ namespace ForestOfElves
             {
                 dx = 0;
                 dy = -1;
-                //ndy = y - 1; 
             }
             if (input.LEFT)
             {
                 dx = -1;
                 dy = 0;
-                //ndx = x - 1;
             }
             if (input.DOWN)
             {
                 dx = 0;
                 dy = 1;     
-                //dy = y + 1;
             }
             if (input.RIGHT)
             {
                 dx = 1;
                 dy = 0;
-                //dx = x + 1;
+            }
+            if (input.USEPOT)
+            {
+                UsePotAndHeal(usePot, health);
+            }
+            if (input.USEPART)
+            {
+                UsePartsAndRepair(usePart, shield);
             }
             targetPosX = x + dx;
             targetPosY = y + dy;
         }
-        public void Moving()
+        public void MovePlayer()
         {
             x = targetPosX;
             y = targetPosY;
-        }
-        
-        public void InBattle()
-        {
-            if (input.UP)
-            {
-                attacking = true;
-            }
-            if (input.LEFT)
-            {
-                healing = true;
-            }
-            if (input.DOWN)
-            {
-                blockDamage = true;
-            }
-            if (input.RIGHT)
-            {                
-                repairing = true;
-            }
         }
     }
 }

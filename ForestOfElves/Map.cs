@@ -33,55 +33,62 @@ namespace ForestOfElves
         public string[] textmap = System.IO.File.ReadAllLines(@"MapFile.txt");
 
         public string[,] publicMap;
-        public void MapDisplay()
+
+
+        public Map()
         {
             string[,] map = new string[textmap.Length, textmap[0].Split(' ').Length];
             publicMap = map;
-            //string[,] map = new string[textmap.GetLength(0),textmap.GetLength(1)];
-
-
+        }
+        public void DisplayMap()
+        {
 
             Console.SetCursorPosition(0, 0);
             for (int x = 0; x < textmap.Length; x++)
             {
                 string line = textmap[x];
-                for (int y = 0; y < map.GetLength(1); y++)
+                for (int y = 0; y < publicMap.GetLength(1); y++)
                 {                   
                     string[] split = line.Split(' ');
-                    map[x, y] = split[y];
-                    if (map[x, y] == "0")
+                    publicMap[x, y] = split[y];
+                    if (publicMap[x, y] == "0")
                     {
                         Console.BackgroundColor = ConsoleColor.Green;
                         Console.ForegroundColor = ConsoleColor.Green;
                     }
-                    if (map[x, y] == "W")
+                    if (publicMap[x, y] == "W")                   
                     {
                         Console.BackgroundColor = ConsoleColor.Blue;
                         Console.ForegroundColor = ConsoleColor.Blue;
                     }
-                    if (map[x, y] == "^")
+                    if (publicMap[x, y] == "T")
+                    {
+                        Console.BackgroundColor = ConsoleColor.DarkGreen;
+                        Console.ForegroundColor = ConsoleColor.DarkGreen;
+                    }
+                    if (publicMap[x, y] == "^")
                     {
                         Console.BackgroundColor = ConsoleColor.Gray;
                         Console.ForegroundColor = ConsoleColor.Gray;
                     }
-                    if (map[x, y] == "B")
+                    if (publicMap[x, y] == "B")
                     {
                         Console.BackgroundColor = ConsoleColor.Black;
                         Console.ForegroundColor = ConsoleColor.Black;
                     }
-                    if (map[x, y] == "I")
+                    if (publicMap[x, y] == "I")
                     {
                         Console.BackgroundColor = ConsoleColor.DarkYellow;
                         Console.ForegroundColor = ConsoleColor.DarkYellow;
                     }
-                    Console.Write(map[x,y]);    
+                    Console.Write(publicMap[x,y]);    
                 }
                 Console.WriteLine();        
             }
             Console.ResetColor();
         }
         
-        public bool WallChecker(int x, int y)
+        public bool IsWallAt(int x, int y)
         {
             if (publicMap[y, x] == "W")
             {
@@ -91,15 +98,20 @@ namespace ForestOfElves
             {
                 return true;
             }           
+            if (publicMap[y, x] == "T")
+            {
+                return true;
+            }
             return false;
         }
 
-        public void DoorChecker(int x, int y, int hasKey)
+        public bool IsDoorAt(int x, int y)
         {
-            if (publicMap[y, x] == "I" && hasKey == 1)
+            if (publicMap[y, x] == "I")
             {
-
+                return true;
             }
+            return false;
 
         }
     }
