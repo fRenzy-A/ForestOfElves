@@ -1,35 +1,34 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Security.Policy;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace ForestOfElves
 {
-    internal class Tank : Enemy
+    internal class Boss : Enemy
     {
         Map map;
         Player player;
         Random random;
-        public Tank(Map map, Random random, Player player) : base(map, random, player)
+
+        public Boss(Map map, Random random, Player player) : base(map, random, player)
         {
             this.map = map;
             this.random = random;
             this.player = player;
             UserInput input = new UserInput();
-            
-
         }
         public override void OnStart()
         {
-            health = 250;
-            sprite = "T";
+            bossIsDead = false;
+            health = 500;
+            sprite = "B";
             decay = 5;
-            howManyPlyrMoves = 7; // how many player moves until it can do an action
+            howManyPlyrMoves = 0; // how many player moves until it can do an action
             amountLeft = howManyPlyrMoves;
 
-            currentEnemyDamage = 10;
+            currentEnemyDamage = 100;
         }
         public override void Update()
         {
@@ -47,21 +46,11 @@ namespace ForestOfElves
             }
             else
             {
-                if (amountLeft == 0)
+                GoingTo();
+
+                if (player.IsPlayerAt(targetPosX, targetPosY))
                 {
-                    GoingTo();
-
-                    if (map.IsWallAt(targetPosX, targetPosY)) return;
-
-                    if (player.IsPlayerAt(targetPosX, targetPosY))
-                    {
-                        Attacking();
-                    }
-                    else
-                    {
-                        Move();
-                    }
-                    amountLeft = howManyPlyrMoves;
+                    Attacking();
                 }
 
             }
@@ -115,13 +104,12 @@ namespace ForestOfElves
             {
                 sprite = "k";
                 dead = true;
+                bossIsDead = true;
             }
             return;
         }
         public override void Attacking()
         {
-
-
             player.TakeDamage(currentEnemyDamage);
         }
     }

@@ -19,17 +19,16 @@ namespace ForestOfElves
             this.random = random;
             this.player = player;
             UserInput input = new UserInput();
+        }
+        public override void OnStart()
+        {
             health = 100;
             sprite = "G";
             decay = 5;
             howManyPlyrMoves = 2; // how many player moves until it can do an action
             amountLeft = howManyPlyrMoves;
 
-            currentEnemyDamage = 10;
-
-        }
-        public override void OnStart()
-        {
+            currentEnemyDamage = 30;
         }
         public override void Update()
         {

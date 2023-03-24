@@ -15,57 +15,66 @@ namespace ForestOfElves
         public UserInput input;
         public Player player;
         public Random random;
-        //public Enemy enemy;
         public EnemyManager enemies;
         public ItemManager items;
-
         public HUD HUD;
-
-
-        public GameManager()
+        public bool endGame;
+        public GameManager(UserInput input)
         {
             random = new Random();
             map = new Map();
-            input = new UserInput();
+            this.input = input;
             player = new Player(map,input,random);
-            //enemy = new Enemy(map,player);
-
             enemies = new EnemyManager(map,random,player);
             items = new ItemManager(map,player,random);
-
             HUD = new HUD(player, map);
         }
+
         public void GameUpdate()
         {
             Console.SetWindowSize(100, 60);
-
-            //OnStart();
-            while (true)
+            endGame = false;
+            OnStart();
+            while (!endGame)
             {
-
                 map.DisplayMap();
 
                 player.Update(enemies);
                 enemies.Update();
                 items.Update();
+
                 player.Draw();
                 enemies.Draw();
                 items.Draw();
 
-
-
                 HUD.MainHUD();
+
+
+                if (player.PlayerDied())
+                {
+                    ClearOnScreen();
+                    endGame = true;
+                }
+                
                 input.Input();
 
             }
+            
+
 
         }
         public void OnStart()
         {
+            player.OnStart();
             enemies.OnStart();
+            items.OnStart();
         }
 
-
+        public void ClearOnScreen()
+        {
+            enemies.DeleteAll();
+            items.DeleteAll();
+        }
 
 
     }

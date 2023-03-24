@@ -9,6 +9,7 @@ namespace ForestOfElves
 {
     internal class Character
     {        
+
         public void WhereIs(int x, int y, string character)
         {
             Console.CursorVisible = false;

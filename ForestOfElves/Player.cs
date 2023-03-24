@@ -16,10 +16,10 @@ namespace ForestOfElves
         Random random;
         //Enemy enemy;
 
-        public int health = 100;
-        public int shield = 50;
-        public int usePot = 50;
-        public int usePart = 25;
+        public int health;
+        public int shield;
+        public int usePot;
+        public int usePart;
 
 
         public int x = 10;
@@ -49,6 +49,16 @@ namespace ForestOfElves
             this.random = random;  
         }
 
+        public void OnStart()
+        {
+            health = 10;
+            shield = 0;
+            usePot = 50;
+            usePart = 25;
+            x = 10;
+            y = 5;
+            currentplayerDamage = 50;
+        }
         public void Update(EnemyManager enemyManager)
         {
             attacking = false;
@@ -80,13 +90,13 @@ namespace ForestOfElves
         }
         public void TakeDamage(int enemyDamage)
         {
-            shield -= enemyDamage;
             if (shield < enemyDamage) //spillover
             {
                 health = (health + shield) - enemyDamage;
                 shield = 0;
 
             }
+            else shield -= enemyDamage;
             if (shield == 0)
             {
                 health -= enemyDamage;
@@ -131,8 +141,8 @@ namespace ForestOfElves
             else
             {
                 howManyShields--;
-                shield += howMuch;
-                if (sh < 50)
+                sh += howMuch;
+                if (shield < 50)
                 {
                     shield = 50;
                 }
@@ -168,6 +178,10 @@ namespace ForestOfElves
             {
                 UsePartsAndRepair(usePart, shield);
             }
+            if (input.SPACE)
+            {
+                health = -20;
+            }
             targetPosX = x + dx;
             targetPosY = y + dy;
         }
@@ -175,6 +189,15 @@ namespace ForestOfElves
         {
             x = targetPosX;
             y = targetPosY;
+        }
+
+        public bool PlayerDied()
+        {
+            if (health <= 0)
+            {
+                return true;
+            }
+            else return false;
         }
     }
 }

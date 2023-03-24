@@ -11,6 +11,8 @@ namespace ForestOfElves
     {
         List<Enemy> enemies;
         Random random;
+        Map map;
+        Player player;
         int rndLocationX;
         int rndLocationY;
         //Enemy[] enemy = new Enemy[]; 
@@ -19,7 +21,13 @@ namespace ForestOfElves
         {
             enemies = new List<Enemy>();
             this.random = random;
+            this.map = map;
+            this.player = player;
 
+            //31,29 first key lcoation | 85, 40 second key location | 83,27 tanks location | 69,10 boss location
+        }
+        public void OnStart()
+        {
             // setting up batch of enemies in specific locations
             for (int i = 0; i < 8; i++)
             {
@@ -51,10 +59,7 @@ namespace ForestOfElves
                 rndLocationY = random.Next(23, 31);
                 enemies.Add(new Tank(map, random, player) { x = rndLocationX, y = rndLocationY });
             }
-            //31,29 first key lcoation | 85, 40 second key location | 83,27 tanks location | 69,10 boss location
-        }
-        public void OnStart()
-        {           
+            enemies.Add(new Boss(map, random, player) { x = 60, y = 14 });
             foreach (Enemy enemy in enemies)
             {                
                 enemy.OnStart();
@@ -111,7 +116,10 @@ namespace ForestOfElves
             }
         }
 
-
+        public void DeleteAll()
+        {
+            enemies.Clear();
+        }
 
     }
 }

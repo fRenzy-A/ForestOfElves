@@ -11,13 +11,11 @@ namespace ForestOfElves
     internal class Enemy : Character
     {
         Map map;
-        //Player player = new Player(); // a new player! uh-oh!!
-        Player player; // reference to the player
+        Player player;
         Random random;
         
         public string sprite;
-
-        public int x { get; set; }
+        public int x { get; set; }      
         public int y { get; set; }
 
         public int dx;
@@ -38,7 +36,7 @@ namespace ForestOfElves
 
         public bool dead;
 
-        
+        public bool bossIsDead;
 
         public Enemy(Map map, Random random,Player player) // constructor
         {

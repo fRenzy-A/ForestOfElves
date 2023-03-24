@@ -16,7 +16,8 @@ namespace ForestOfElves
         public bool RIGHT;
         public bool USEPOT;
         public bool USEPART;
-        
+        public bool ENTER;
+        public bool SPACE;
 
         public void Input()
         {
@@ -27,6 +28,8 @@ namespace ForestOfElves
             RIGHT = false;
             USEPOT = false;
             USEPART = false;
+            ENTER = false;
+            SPACE = false;
             
 
 
@@ -50,6 +53,12 @@ namespace ForestOfElves
                     break;
                 case ConsoleKey.L:
                     USEPART = true;
+                    break;
+                case ConsoleKey.Enter:
+                    ENTER = true;
+                    break;
+                case ConsoleKey.Spacebar:
+                    SPACE = true;
                     break;
             }
             

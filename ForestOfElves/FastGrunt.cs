@@ -18,16 +18,16 @@ namespace ForestOfElves
             this.random = random;
             this.player = player;
             UserInput input = new UserInput();
+            
+        }
+        public override void OnStart()
+        {
             health = 50;
             sprite = "F";
             howManyPlyrMoves = 1;
             amountLeft = howManyPlyrMoves;
             currentEnemyDamage = 5;
             decay = 5;
-            //this.random = random;
-        }
-        public override void OnStart()
-        {
         }
         public override void Update()
         {
