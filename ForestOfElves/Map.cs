@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace ForestOfElves
 {
-    internal class Map 
+    internal class Map
     {
         /*public char[,] map = new char[,]
             {
@@ -31,74 +31,135 @@ namespace ForestOfElves
             };*/
 
         public string[] textmap = System.IO.File.ReadAllLines(@"MapFile.txt");
-
-        public string[,] publicMap;
+        public char[][] publicMap;
 
 
         public Map()
         {
-            string[,] map = new string[textmap.Length, textmap[0].Split(' ').Length];
-            publicMap = map;
+            publicMap = new char[textmap.Length][];
+            for (int i = 0; i < textmap.Length; i++)
+            {
+                publicMap[i] = textmap[i].ToCharArray();
+            }
+            //string[,] map = new string[textmap.Length, textmap[0].Split(' ').Length];
+            // publicMap = map;
         }
+        /* public void DisplayMap()
+         {
+
+             Console.SetCursorPosition(0, 0);
+             for (int x = 0; x < textmap.Length; x++)
+             {
+                 string line = textmap[x];
+                 for (int y = 0; y < publicMap.GetLength(1); y++)
+                 {                   
+                     string[] split = line.Split(' ');
+                     publicMap[x, y] = split[y];
+                     if (publicMap[x, y] == "0")
+                     {
+                         Console.BackgroundColor = ConsoleColor.Green;
+                         Console.ForegroundColor = ConsoleColor.Green;
+                     }
+                     if (publicMap[x, y] == "W")                   
+                     {
+                         Console.BackgroundColor = ConsoleColor.Blue;
+                         Console.ForegroundColor = ConsoleColor.Blue;
+                     }
+                     if (publicMap[x, y] == "T")
+                     {
+                         Console.BackgroundColor = ConsoleColor.DarkGreen;
+                         Console.ForegroundColor = ConsoleColor.DarkGreen;
+                     }
+                     if (publicMap[x, y] == "^")
+                     {
+                         Console.BackgroundColor = ConsoleColor.Gray;
+                         Console.ForegroundColor = ConsoleColor.Gray;
+                     }
+                     if (publicMap[x, y] == "B")
+                     {
+                         Console.BackgroundColor = ConsoleColor.Black;
+                         Console.ForegroundColor = ConsoleColor.Black;
+                     }
+                     if (publicMap[x, y] == "I")
+                     {
+                         Console.BackgroundColor = ConsoleColor.DarkYellow;
+                         Console.ForegroundColor = ConsoleColor.DarkYellow;
+                     }
+                     Console.Write(publicMap[x,y]);    
+                 }
+                 Console.WriteLine();        
+             }
+             Console.ResetColor();
+         }*/
         public void DisplayMap()
         {
-
             Console.SetCursorPosition(0, 0);
-            for (int x = 0; x < textmap.Length; x++)
+            foreach (char[] map in publicMap)
             {
-                string line = textmap[x];
-                for (int y = 0; y < publicMap.GetLength(1); y++)
-                {                   
-                    string[] split = line.Split(' ');
-                    publicMap[x, y] = split[y];
-                    if (publicMap[x, y] == "0")
+
+
+                Console.Write(map);
+                foreach (char c in map)
+                {
+
+                    if (c == '0')
                     {
                         Console.BackgroundColor = ConsoleColor.Green;
                         Console.ForegroundColor = ConsoleColor.Green;
                     }
-                    if (publicMap[x, y] == "W")                   
+                    if (c == 'W')
                     {
                         Console.BackgroundColor = ConsoleColor.Blue;
                         Console.ForegroundColor = ConsoleColor.Blue;
                     }
-                    if (publicMap[x, y] == "T")
-                    {
-                        Console.BackgroundColor = ConsoleColor.DarkGreen;
-                        Console.ForegroundColor = ConsoleColor.DarkGreen;
-                    }
-                    if (publicMap[x, y] == "^")
+                    if (c == '^')
                     {
                         Console.BackgroundColor = ConsoleColor.Gray;
                         Console.ForegroundColor = ConsoleColor.Gray;
                     }
-                    if (publicMap[x, y] == "B")
-                    {
-                        Console.BackgroundColor = ConsoleColor.Black;
-                        Console.ForegroundColor = ConsoleColor.Black;
-                    }
-                    if (publicMap[x, y] == "I")
+                    if (c == 'I')
                     {
                         Console.BackgroundColor = ConsoleColor.DarkYellow;
                         Console.ForegroundColor = ConsoleColor.DarkYellow;
                     }
-                    Console.Write(publicMap[x,y]);    
+                    /*switch (c)
+                    {
+                        case '0':
+                            Console.BackgroundColor = ConsoleColor.Green;
+                            Console.ForegroundColor = ConsoleColor.Green;
+                            break;
+                        case 'W':
+                            Console.BackgroundColor = ConsoleColor.Blue;
+                            Console.ForegroundColor = ConsoleColor.Blue;
+                            break;
+                        case '^':
+                            Console.BackgroundColor = ConsoleColor.Gray;
+                            Console.ForegroundColor = ConsoleColor.Gray;
+                            break;
+                        case 'I':
+                            Console.BackgroundColor = ConsoleColor.DarkYellow;
+                            Console.ForegroundColor = ConsoleColor.DarkYellow;
+                            break;
+                    }*/
                 }
-                Console.WriteLine();        
             }
-            Console.ResetColor();
         }
+        /*public void ColorMap()
+        {
+
+        }*/
         
         public bool IsWallAt(int x, int y)
         {
-            if (publicMap[y, x] == "W")
+            if (publicMap[y][x] == 'W')
             {
                 return true;
             }
-            if (publicMap[y, x] == "^")
+            if (publicMap[y][x] == '^')
             {
                 return true;
             }           
-            if (publicMap[y, x] == "T")
+            if (publicMap[y][x] == 'T')
             {
                 return true;
             }
@@ -107,7 +168,7 @@ namespace ForestOfElves
 
         public bool IsDoorAt(int x, int y)
         {
-            if (publicMap[y, x] == "I")
+            if (publicMap[y][x] == 'I')
             {
                 return true;
             }
