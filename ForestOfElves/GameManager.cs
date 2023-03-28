@@ -37,8 +37,8 @@ namespace ForestOfElves
             OnStart();
             while (!endGame)
             {
-                map.DisplayMap();
 
+                map.DrawMap();
                 player.Update(enemies);
                 enemies.Update();
                 items.Update();

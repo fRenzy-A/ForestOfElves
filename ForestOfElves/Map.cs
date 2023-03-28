@@ -33,6 +33,9 @@ namespace ForestOfElves
         public string[] textmap = System.IO.File.ReadAllLines(@"MapFile.txt");
         public char[][] publicMap;
 
+        public char[] previousInstance;
+        public char[] futureInstance;
+
 
         public Map()
         {
@@ -91,63 +94,57 @@ namespace ForestOfElves
              }
              Console.ResetColor();
          }*/
-        public void DisplayMap()
+        public void DrawMap()
         {
             Console.SetCursorPosition(0, 0);
             foreach (char[] map in publicMap)
             {
+                ColorMap(map);
+                Console.WriteLine();
+            }
+            Console.ResetColor();
 
-
-                Console.Write(map);
-                foreach (char c in map)
+        }
+        public void ColorMap(char[] map)
+        {
+            foreach (char c in map)
+            {
+                switch (c)
                 {
-
-                    if (c == '0')
-                    {
+                    case '0':
                         Console.BackgroundColor = ConsoleColor.Green;
                         Console.ForegroundColor = ConsoleColor.Green;
-                    }
-                    if (c == 'W')
-                    {
+                        break;
+                    case 'W':
                         Console.BackgroundColor = ConsoleColor.Blue;
                         Console.ForegroundColor = ConsoleColor.Blue;
-                    }
-                    if (c == '^')
-                    {
-                        Console.BackgroundColor = ConsoleColor.Gray;
-                        Console.ForegroundColor = ConsoleColor.Gray;
-                    }
-                    if (c == 'I')
-                    {
+                        break;
+                    case '^':
+                        Console.BackgroundColor = ConsoleColor.DarkGray;
+                        Console.ForegroundColor = ConsoleColor.DarkGray;
+                        break;
+                    case 'I':
                         Console.BackgroundColor = ConsoleColor.DarkYellow;
                         Console.ForegroundColor = ConsoleColor.DarkYellow;
-                    }
-                    /*switch (c)
-                    {
-                        case '0':
-                            Console.BackgroundColor = ConsoleColor.Green;
-                            Console.ForegroundColor = ConsoleColor.Green;
-                            break;
-                        case 'W':
-                            Console.BackgroundColor = ConsoleColor.Blue;
-                            Console.ForegroundColor = ConsoleColor.Blue;
-                            break;
-                        case '^':
-                            Console.BackgroundColor = ConsoleColor.Gray;
-                            Console.ForegroundColor = ConsoleColor.Gray;
-                            break;
-                        case 'I':
-                            Console.BackgroundColor = ConsoleColor.DarkYellow;
-                            Console.ForegroundColor = ConsoleColor.DarkYellow;
-                            break;
-                    }*/
+                        break;
+                    case 'T':
+                        Console.BackgroundColor = ConsoleColor.DarkGreen;
+                        Console.ForegroundColor = ConsoleColor.DarkGreen;
+                        break;
+                    default:
+                        Console.ForegroundColor = ConsoleColor.Black;
+                        Console.BackgroundColor = ConsoleColor.Black;
+                        break;
                 }
+                Console.Write(c);
             }
         }
-        /*public void ColorMap()
+
+        public void MapUpdate()
         {
 
-        }*/
+        }
+
         
         public bool IsWallAt(int x, int y)
         {
