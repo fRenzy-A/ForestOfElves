@@ -14,17 +14,6 @@ namespace ForestOfElves
         Player player;
         Random random;
         
-        public string sprite;
-        public int x { get; set; }      
-        public int y { get; set; }
-
-        public int dx;
-        public int dy;
-
-        public int targetPosX;
-        public int targetPosY;
-
-        public int health;
         public int decay;
 
         public bool attacked;

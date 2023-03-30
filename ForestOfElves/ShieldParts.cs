@@ -13,7 +13,7 @@ namespace ForestOfElves
         public ShieldParts(Player player) : base(player)
         {
             this.player = player;
-            sprite = "S";
+            sprite = 'S';
         }
 
         public override void Update()
@@ -33,7 +33,7 @@ namespace ForestOfElves
             if (player.IsPlayerAt(x, y))
             {
                 player.howManyShields++;
-                sprite = "";
+                sprite = ' ';
                 taken = true;
             }
         }

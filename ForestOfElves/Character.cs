@@ -8,9 +8,19 @@ using System.Threading.Tasks;
 namespace ForestOfElves
 {
     internal class Character
-    {        
+    {
+        public int x { get; set; }
+        public int y { get; set; }
 
-        public void WhereIs(int x, int y, string character)
+        public int health;
+        public int dx;
+        public int dy;
+        public int targetPosX;
+        public int targetPosY;
+
+        public char sprite;
+         
+        public void WhereIs(int x, int y, char character)
         {
             Console.CursorVisible = false;
             Console.SetCursorPosition(x, y);

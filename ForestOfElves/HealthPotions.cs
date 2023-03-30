@@ -12,7 +12,7 @@ namespace ForestOfElves
         public HealthPotions(Player player) : base(player)
         {
             this.player = player;
-            sprite = "H";
+            sprite = 'H';
         }
 
         public override void Update()
@@ -33,7 +33,7 @@ namespace ForestOfElves
             if (player.IsPlayerAt(x, y))
             {
                 player.howManyPotions++;
-                sprite = "";
+                sprite = ' ';
                 taken = true;
             }
         }

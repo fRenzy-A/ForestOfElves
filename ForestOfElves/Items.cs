@@ -18,11 +18,7 @@ namespace ForestOfElves
             this.player = player;
         }
 
-        public int x { get; set; }
-        public int y { get; set; }
 
-
-        public string sprite;
 
         public virtual void Update()
         {

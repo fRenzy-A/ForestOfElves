@@ -18,6 +18,7 @@ namespace ForestOfElves
         public EnemyManager enemies;
         public ItemManager items;
         public HUD HUD;
+        public DoubleBuffer doubleBuffer;
         public bool endGame;
         public GameManager(UserInput input)
         {
@@ -28,6 +29,7 @@ namespace ForestOfElves
             enemies = new EnemyManager(map,random,player);
             items = new ItemManager(map,player,random);
             HUD = new HUD(player, map);
+            doubleBuffer = new DoubleBuffer();
         }
 
         public void GameUpdate()
@@ -38,11 +40,13 @@ namespace ForestOfElves
             while (!endGame)
             {
 
-                map.DrawMap();
                 player.Update(enemies);
                 enemies.Update();
                 items.Update();
 
+
+                //doubleBuffer.previousInstance[][] { map.DrawMap(); player.Draw(); }
+                map.DrawMap();
                 player.Draw();
                 enemies.Draw();
                 items.Draw();
@@ -52,7 +56,7 @@ namespace ForestOfElves
 
                 if (player.PlayerDied())
                 {
-                    ClearOnScreen();
+                    ClearScreenEntities();
                     endGame = true;
                 }
                 
@@ -64,13 +68,15 @@ namespace ForestOfElves
 
         }
         public void OnStart()
-        {
+        {             
             player.OnStart();
             enemies.OnStart();
             items.OnStart();
         }
 
-        public void ClearOnScreen()
+
+
+        public void ClearScreenEntities()
         {
             enemies.DeleteAll();
             items.DeleteAll();

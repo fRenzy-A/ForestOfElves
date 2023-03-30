@@ -14,24 +14,12 @@ namespace ForestOfElves
         Map map;
         UserInput input;
         Random random;
-        //Enemy enemy;
 
-        public int health;
+
+
         public int shield;
         public int usePot;
         public int usePart;
-
-
-        public int x = 10;
-        public int y = 5;
-        
-        //deltas
-        public int dx;
-        public int dy;
-
-        public int targetPosX;
-        public int targetPosY;  
-
 
         public bool attacking;
 
@@ -40,7 +28,6 @@ namespace ForestOfElves
         public int howManyPotions;
         public int howManyShields;
         public int keyParts;
-
 
         public Player(Map map, UserInput input, Random random)
         {
@@ -51,6 +38,7 @@ namespace ForestOfElves
 
         public void OnStart()
         {
+            sprite = 'X';
             health = 10;
             shield = 0;
             usePot = 50;
@@ -86,7 +74,7 @@ namespace ForestOfElves
 
         public void Draw()
         {
-            WhereIs(x, y, "X");
+            WhereIs(x, y, sprite);
         }
         public void TakeDamage(int enemyDamage)
         {
@@ -116,7 +104,7 @@ namespace ForestOfElves
         {
             enemy.TakeDamage();
         }
-        public void UsePotAndHeal(int howMuch,int hp)
+        public void UsePotAndHeal(int hp)
         {
             if (howManyPotions == 0)
             {
@@ -125,14 +113,15 @@ namespace ForestOfElves
             else
             {
                 howManyPotions--;
-                hp += howMuch;
-                if (health < 100)
+                hp += usePot;
+                if (hp > 100)
                 {
-                    health = 100;
+                    hp = 100;
                 }
+                return;
             }
         }
-        public void UsePartsAndRepair(int howMuch, int sh)
+        public void UsePartsAndRepair(int sh)
         {
             if (howManyShields == 0)
             {
@@ -141,11 +130,12 @@ namespace ForestOfElves
             else
             {
                 howManyShields--;
-                sh += howMuch;
-                if (shield < 50)
+                sh += usePot;
+                if (sh > 50)
                 {
-                    shield = 50;
+                    sh = 50;
                 }
+                return;
             }
         }
         public void Input()
@@ -172,11 +162,11 @@ namespace ForestOfElves
             }
             if (input.USEPOT)
             {
-                UsePotAndHeal(usePot, health);
+                UsePotAndHeal(health);
             }
             if (input.USEPART)
             {
-                UsePartsAndRepair(usePart, shield);
+                UsePartsAndRepair(shield);
             }
             if (input.SPACE)
             {

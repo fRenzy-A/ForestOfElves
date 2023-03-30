@@ -13,7 +13,7 @@ namespace ForestOfElves
         public KeyParts(Player player) : base(player)
         {
             this.player = player;
-            sprite = "<";
+            sprite = '<';
         }
 
         public override void Update()
@@ -33,7 +33,7 @@ namespace ForestOfElves
             if (player.IsPlayerAt(x, y))
             {
                 player.keyParts++;
-                sprite = "";
+                sprite = ' ';
                 taken = true;
             }
         }
