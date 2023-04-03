@@ -12,7 +12,7 @@ namespace ForestOfElves
         Map map;
         Player player;
         Random random;
-        public Tank(Map map, Random random, Player player) : base(map, random, player)
+        public Tank(Map map, Random random, Player player, Renderer renderer) : base(map, random, player, renderer)
         {
             this.map = map;
             this.random = random;

@@ -29,7 +29,7 @@ namespace ForestOfElves
         public int howManyShields;
         public int keyParts;
 
-        public Player(Map map, UserInput input, Random random)
+        public Player(Map map, UserInput input, Random random,Renderer renderer) : base(renderer)
         {
             this.map = map;
             this.input = input; 

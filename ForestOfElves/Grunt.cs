@@ -13,7 +13,7 @@ namespace ForestOfElves
         Player player;
         Random random;
  
-        public Grunt(Map map,Random random,Player player) : base(map, random,player) 
+        public Grunt(Map map,Random random,Player player, Renderer renderer) : base(map, random,player, renderer) 
         {        
             this.map = map;
             this.random = random;

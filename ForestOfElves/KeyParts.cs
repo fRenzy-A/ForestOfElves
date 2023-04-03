@@ -10,7 +10,7 @@ namespace ForestOfElves
     internal class KeyParts : Items
     {
         Player player;
-        public KeyParts(Player player) : base(player)
+        public KeyParts(Player player, Renderer renderer) : base(player, renderer)
         {
             this.player = player;
             sprite = '<';

@@ -13,6 +13,7 @@ namespace ForestOfElves
         Map map;
         Player player;
         Random random;
+        Renderer renderer;
         
         public int decay;
 
@@ -27,7 +28,7 @@ namespace ForestOfElves
 
         public bool bossIsDead;
 
-        public Enemy(Map map, Random random,Player player) // constructor
+        public Enemy(Map map, Random random, Player player, Renderer renderer) : base (renderer)// constructor
         {
             this.map = map;
         }

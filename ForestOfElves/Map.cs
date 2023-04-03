@@ -2,60 +2,54 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
+using System.Globalization;
 using System.Linq;
+using System.Runtime.ExceptionServices;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace ForestOfElves
 {
+    
     internal class Map
     {
-        /*public char[,] map = new char[,]
-            {
-                { '^','^','^','^','^','^','^','^','^','^','^','^','^','^','^','^' },
-                { '^','0','0','0','0','0','0','0','0','0','0','0','0','0','0','^' },
-                { '^','0','0','0','0','0','0','0','0','0','0','0','0','0','0','^' },
-                { '^','0','0','0','0','0','0','0','0','W','0','0','0','0','0','^' },
-                { '^','0','0','0','0','0','0','0','0','W','W','0','0','0','0','^' },
-                { '^','0','0','W','0','0','0','0','0','0','0','0','0','0','0','^' },
-                { '^','0','W','W','0','0','0','0','0','0','0','0','0','0','0','^' },
-                { '^','0','W','0','0','0','0','0','0','0','0','0','0','0','0','^' },
-                { '^','0','0','0','0','0','0','0','0','W','0','0','0','0','0','^' },
-                { '^','0','0','0','0','0','0','0','0','W','W','0','0','0','0','^' },
-                { '^','0','0','0','0','0','0','0','0','W','W','0','0','0','0','^' },
-                { '^','0','0','0','0','0','0','0','0','W','0','0','0','0','0','^' },
-                { '^','0','0','0','0','0','0','0','0','W','0','0','0','0','0','^' },
-                { '^','0','0','0','0','0','0','0','0','0','0','0','0','0','0','^' },
-                { '^','0','0','0','0','0','0','0','0','0','0','0','0','0','0','^' },
-                { '^','^','^','^','^','^','^','^','^','^','^','^','^','^','^','^' }
-            };*/
+        Renderer renderer;
 
         public string[] textmap = System.IO.File.ReadAllLines(@"MapFile.txt");
         public char[][] publicMap;
 
         
 
-        public Map()
+        public Map(Renderer renderer)
         {
+            this.renderer = renderer;
             publicMap = new char[textmap.Length][];
             for (int i = 0; i < textmap.Length; i++)
             {
                 publicMap[i] = textmap[i].ToCharArray();
             }
+            renderer.drawData = new char[publicMap.Length][];
+           // renderer.drawData = publicMap;
         }
         public void DrawMap()
         {
-            Console.SetCursorPosition(0, 0);
+            //Array.Clear(renderer.drawData, 0, renderer.drawData.Length);
+            
+            for (int i = 0; i < publicMap.Length; i++)
+            {
+                renderer.drawData[i] = publicMap[i];             
+            }
+            /*Console.SetCursorPosition(0, 0);
             foreach (char[] map in publicMap)
             {
                 ColorMap(map);
                 Console.WriteLine();
             }
-            Console.ResetColor();
+            Console.ResetColor();*/
         }
         public void ColorMap(char[] map)
         {
-            foreach (char c in map)
+            /*foreach (char c in map)
             {
                 switch (c)
                 {
@@ -85,7 +79,7 @@ namespace ForestOfElves
                         break;
                 }
                 Console.Write(c);
-            }
+            }*/
         }
 
         public void MapUpdate()

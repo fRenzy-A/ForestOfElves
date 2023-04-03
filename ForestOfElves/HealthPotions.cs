@@ -9,7 +9,7 @@ namespace ForestOfElves
     internal class HealthPotions : Items
     {
         Player player;
-        public HealthPotions(Player player) : base(player)
+        public HealthPotions(Player player, Renderer renderer) : base(player, renderer)
         {
             this.player = player;
             sprite = 'H';

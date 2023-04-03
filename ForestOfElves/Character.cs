@@ -9,6 +9,7 @@ namespace ForestOfElves
 {
     internal class Character
     {
+        Renderer renderer;
         public int x { get; set; }
         public int y { get; set; }
 
@@ -19,12 +20,16 @@ namespace ForestOfElves
         public int targetPosY;
 
         public char sprite;
+
+        public Character(Renderer renderer)
+        {
+            this.renderer = renderer;
+        }
          
         public void WhereIs(int x, int y, char character)
         {
-            Console.CursorVisible = false;
-            Console.SetCursorPosition(x, y);
-            Console.Write(character);
+            sprite = character;
+            renderer.drawData[y][x] = sprite;
         }
     }
 }

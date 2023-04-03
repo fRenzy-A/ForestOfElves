@@ -10,7 +10,7 @@ namespace ForestOfElves
     internal class ShieldParts : Items
     {
         Player player;
-        public ShieldParts(Player player) : base(player)
+        public ShieldParts(Player player, Renderer renderer) : base(player, renderer)
         {
             this.player = player;
             sprite = 'S';

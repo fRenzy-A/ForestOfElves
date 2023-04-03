@@ -10,9 +10,10 @@ namespace ForestOfElves
     internal class Items : Character
     {
         Player player;
+        Renderer renderer;
         public bool taken;
 
-        public Items(Player player)
+        public Items(Player player, Renderer renderer) : base(renderer)
         {
             taken = false;
             this.player = player;
