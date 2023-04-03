@@ -11,24 +11,25 @@ namespace ForestOfElves
     {
         Map map;
         Character character;
-        public char[][] drawData;
         public Renderer()
         {
             //this.map = map;
             //this.character = character;
             
         }
-        public void RenderGame()
+        public void RenderGame(string Character, int x, int y)
         {
-            Console.SetCursorPosition(0, 0);
-            foreach (char[] c in drawData)
+            Console.SetCursorPosition(x, y);
+            Console.Write(Character);
+            
+            /*foreach (char[] c in drawData)
             {         
                 foreach (char c2 in c)
                 {
                     Console.Write(c2);
                 }
                 Console.WriteLine();
-            }
+            }*/
  
         }
 

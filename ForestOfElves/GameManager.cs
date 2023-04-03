@@ -43,20 +43,17 @@ namespace ForestOfElves
 
             while (!endGame)
             {
+                map.DrawMap();
 
                 player.Update(enemies);
                 enemies.Update();
                 items.Update();
 
-
-                map.DrawMap();
                 player.Draw();
                 enemies.Draw();
                 items.Draw();
 
-
                 HUD.MainHUD();
-                renderer.RenderGame();
 
 
                 if (player.PlayerDied())

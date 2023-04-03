@@ -16,36 +16,44 @@ namespace ForestOfElves
         Renderer renderer;
 
         public string[] textmap = System.IO.File.ReadAllLines(@"MapFile.txt");
-        public char[][] publicMap;
+        public string[,] publicMap;
 
-        
+
 
         public Map(Renderer renderer)
         {
             this.renderer = renderer;
-            publicMap = new char[textmap.Length][];
-            for (int i = 0; i < textmap.Length; i++)
-            {
-                publicMap[i] = textmap[i].ToCharArray();
-            }
-            renderer.drawData = new char[publicMap.Length][];
-           // renderer.drawData = publicMap;
+            
         }
         public void DrawMap()
         {
-            //Array.Clear(renderer.drawData, 0, renderer.drawData.Length);
-            
-            for (int i = 0; i < publicMap.Length; i++)
+
+
+
+
+            publicMap = new string[textmap.Length, textmap[0].Split('\n').Length];;
+            for (int x = 0; x < textmap.Length; x++)
             {
-                renderer.drawData[i] = publicMap[i];             
+                string line = textmap[x];
+                for (int y = 0; y < publicMap.GetLength(1); y++)
+                {
+                    string[] split = line.Split('\n');
+                    publicMap[x, y] = split[y];
+                    renderer.RenderGame(publicMap[x, y], y, x);
+                }
             }
-            /*Console.SetCursorPosition(0, 0);
-            foreach (char[] map in publicMap)
+
+
+            /*foreach (char[] map in publicMap)
             {
-                ColorMap(map);
+                foreach (char c in map)
+                {
+                    renderer.RenderGame(c,map.Length,publicMap.Length);
+                }
                 Console.WriteLine();
-            }
-            Console.ResetColor();*/
+
+            }*/
+            //Console.ResetColor();
         }
         public void ColorMap(char[] map)
         {
@@ -81,24 +89,18 @@ namespace ForestOfElves
                 Console.Write(c);
             }*/
         }
-
-        public void MapUpdate()
-        {
-
-        }
-
-        
+      
         public bool IsWallAt(int x, int y)
         {
-            if (publicMap[y][x] == 'W')
-            {
-                return true;
-            }
-            if (publicMap[y][x] == '^')
+            if (publicMap[y,x] == "^")
             {
                 return true;
             }           
-            if (publicMap[y][x] == 'T')
+            else if (publicMap[y,x] == "W")
+            {
+                return true;
+            }
+            else if (publicMap[y,x] == "T")
             {
                 return true;
             }
@@ -107,12 +109,11 @@ namespace ForestOfElves
 
         public bool IsDoorAt(int x, int y)
         {
-            if (publicMap[y][x] == 'I')
+            if (publicMap[x,y] == "I")
             {
                 return true;
             }
             return false;
-
         }
     }
 }

@@ -38,7 +38,7 @@ namespace ForestOfElves
 
         public void OnStart()
         {
-            sprite = 'X';
+            sprite = "X";
             health = 10;
             shield = 0;
             usePot = 50;
@@ -51,13 +51,13 @@ namespace ForestOfElves
         {
             attacking = false;
             Input();//where movement is calculated
-            
+
+
             if (map.IsWallAt(targetPosX, targetPosY)) return;//checks for walls
             if (keyParts < 2)//checks to see how many keys player has
             {
                 if (map.IsDoorAt(targetPosX, targetPosY)) return;//checks for doors
             }
-            
 
             if (enemyManager.IsEnemyAt(targetPosX, targetPosY))//checks for enemies
             {
@@ -104,11 +104,11 @@ namespace ForestOfElves
         {
             enemy.TakeDamage();
         }
-        public void UsePotAndHeal(int hp)
+        public int UsePotAndHeal(int hp)
         {
             if (howManyPotions == 0)
             {
-                return;
+                return hp;
             }
             else
             {
@@ -118,7 +118,7 @@ namespace ForestOfElves
                 {
                     hp = 100;
                 }
-                return;
+                return hp;
             }
         }
         public void UsePartsAndRepair(int sh)

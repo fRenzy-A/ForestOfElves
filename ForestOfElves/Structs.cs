@@ -12,9 +12,9 @@ namespace ForestOfElves
         ConsoleColor backgroundColor;
         ConsoleColor foregroundColor;
 
-        public RenderData(string sprite)
+        /*public RenderData(string sprite)
         {
 
-        }
+        }*/
     }
 }

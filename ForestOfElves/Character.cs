@@ -19,17 +19,18 @@ namespace ForestOfElves
         public int targetPosX;
         public int targetPosY;
 
-        public char sprite;
+        public string sprite;
 
         public Character(Renderer renderer)
         {
             this.renderer = renderer;
         }
          
-        public void WhereIs(int x, int y, char character)
+        public void WhereIs(int x, int y, string character)
         {
-            sprite = character;
-            renderer.drawData[y][x] = sprite;
+            renderer.RenderGame(character, x, y);
+            /*sprite = character;
+            renderer.drawData[y][x] = sprite;*/
         }
     }
 }

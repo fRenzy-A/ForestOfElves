@@ -23,7 +23,7 @@ namespace ForestOfElves
         {
             bossIsDead = false;
             health = 500;
-            sprite = 'B';
+            sprite = "B";
             decay = 5;
             howManyPlyrMoves = 0; // how many player moves until it can do an action
             amountLeft = howManyPlyrMoves;
@@ -39,7 +39,7 @@ namespace ForestOfElves
                 decay--;
                 if (decay == 0)
                 {
-                    sprite = ' ';
+                    sprite = "";
                     return;
                 }
 
@@ -102,7 +102,7 @@ namespace ForestOfElves
 
             if (health <= 0)
             {
-                sprite = 'k';
+                sprite = "k";
                 dead = true;
                 bossIsDead = true;
             }

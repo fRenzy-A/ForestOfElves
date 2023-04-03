@@ -23,7 +23,7 @@ namespace ForestOfElves
         public override void OnStart()
         {
             health = 100;
-            sprite = 'G';
+            sprite = "G";
             decay = 5;
             howManyPlyrMoves = 2; // how many player moves until it can do an action
             amountLeft = howManyPlyrMoves;
@@ -39,7 +39,7 @@ namespace ForestOfElves
                 decay--;
                 if (decay == 0)
                 {
-                    sprite = ' ';
+                    sprite = "";
                     return;
                 }
                 
@@ -112,7 +112,7 @@ namespace ForestOfElves
 
             if (health <= 0)
             {
-                sprite = 'k';
+                sprite = "k";
                 dead = true;               
             }
             return;
