@@ -21,6 +21,7 @@ namespace ForestOfElves
         public HUD HUD;
         public Character character;
         public bool endGame;
+        public bool playerBeatBoss;
         public GameManager(UserInput input)
         {
             random = new Random();           
@@ -28,17 +29,17 @@ namespace ForestOfElves
             map = new Map(renderer);
             character = new Character(renderer);    
             this.input = input;
-            player = new Player(map,input,random,renderer);
+            player = new Player(map,input,renderer);
             enemies = new EnemyManager(map,random,player,renderer);
             items = new ItemManager(map,player,random,renderer);
             HUD = new HUD(player, map);
+            renderer.GetMapSize(map.textmap.Length, map.textmap[0].Length);
         }
 
         public void GameUpdate()
         {
-            Console.SetWindowSize(100, 60);
             endGame = false;
-
+            playerBeatBoss = false;
             OnStart();
 
             while (!endGame)
@@ -53,21 +54,22 @@ namespace ForestOfElves
                 enemies.Draw();
                 items.Draw();
 
-                HUD.MainHUD();
+                HUD.ShowHUD();
 
 
-                if (player.PlayerDied())
+                if (player.playerDied)
                 {
-                    ClearScreenEntities();
+                    Reset();
                     endGame = true;
                 }
-                
+                if (player.killedBoss)
+                {
+                    Reset();
+                    playerBeatBoss = true;
+                    endGame = true;
+                }
                 input.Input();
-
             }
-            
-
-
         }
         public void OnStart()
         {             
@@ -78,8 +80,9 @@ namespace ForestOfElves
 
 
 
-        public void ClearScreenEntities()
+        public void Reset()
         {
+            renderer.Reset();   
             enemies.DeleteAll();
             items.DeleteAll();
         }

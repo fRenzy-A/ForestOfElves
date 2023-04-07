@@ -13,7 +13,7 @@ namespace ForestOfElves
         public KeyParts(Player player, Renderer renderer) : base(player, renderer)
         {
             this.player = player;
-            sprite = "<";
+            sprite = Settings.keypartSprite;
         }
 
         public override void Update()
@@ -23,10 +23,6 @@ namespace ForestOfElves
                 return;
             }
             else IsTaken();
-        }
-        public override void Draw()
-        {
-            WhereIs(x, y, sprite);
         }
         public override void IsTaken()
         {

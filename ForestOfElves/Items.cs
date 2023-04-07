@@ -26,9 +26,9 @@ namespace ForestOfElves
 
         }
 
-        public virtual void Draw()
+        public void Draw()
         {
-
+            WhereIs(x, y, sprite);
         }
 
         public virtual void IsTaken() // if player takes it

@@ -12,7 +12,7 @@ namespace ForestOfElves
         public HealthPotions(Player player, Renderer renderer) : base(player, renderer)
         {
             this.player = player;
-            sprite = "H";
+            sprite = Settings.healthSprite;
         }
 
         public override void Update()
@@ -23,10 +23,6 @@ namespace ForestOfElves
             }
             else IsTaken();
 
-        }
-        public override void Draw()
-        {
-            WhereIs(x,y,sprite);
         }
         public override void IsTaken()
         {

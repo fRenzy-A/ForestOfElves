@@ -13,9 +13,6 @@ namespace ForestOfElves
         
         Map map;
         UserInput input;
-        Random random;
-
-
 
         public int shield;
         public int usePot;
@@ -23,34 +20,42 @@ namespace ForestOfElves
 
         public bool attacking;
 
-        public int currentplayerDamage = 50;
+        public int currentplayerDamage;
 
         public int howManyPotions;
         public int howManyShields;
         public int keyParts;
 
-        public Player(Map map, UserInput input, Random random,Renderer renderer) : base(renderer)
+        public bool killedBoss;
+
+        public bool playerDied;
+
+        public Player(Map map, UserInput input,Renderer renderer) : base(renderer)
         {
+            
             this.map = map;
             this.input = input; 
-            this.random = random;  
         }
 
         public void OnStart()
         {
-            sprite = "X";
-            health = 10;
-            shield = 0;
-            usePot = 50;
-            usePart = 25;
-            x = 10;
-            y = 5;
-            currentplayerDamage = 50;
+            sprite = Settings.playerSprite;
+            health = Settings.playerHealth;
+            shield = Settings.playerShield;
+            usePot = Settings.howMuchWillPotionsGive;
+            usePart = Settings.howMuchWillShieldsGive;
+            x = Settings.playerPositionX;
+            y = Settings.playerPositionY;
+            currentplayerDamage = Settings.playerDamage;
+            howManyPotions = 0;
+            howManyShields = 0;
+            killedBoss = false;
+            playerDied = false;
         }
         public void Update(EnemyManager enemyManager)
         {
             attacking = false;
-            Input();//where movement is calculated
+            SetTargetPositionOrUseItems();//where movement is calculated and or if player uses an item
 
 
             if (map.IsWallAt(targetPosX, targetPosY)) return;//checks for walls
@@ -66,10 +71,18 @@ namespace ForestOfElves
                 {
                     Attack(enemy);
                 }
-                else MovePlayer(); // in order to move in invisible corpses
+                else
+                {
+                    x = targetPosX;
+                    y = targetPosY;
+                } // in order to move in invisible corpses
             }
 
-            else MovePlayer();//when all above are false
+            else
+            {
+                x = targetPosX;
+                y = targetPosY;
+            } //when all above are false
         }
 
         public void Draw()
@@ -82,12 +95,17 @@ namespace ForestOfElves
             {
                 health = (health + shield) - enemyDamage;
                 shield = 0;
-
             }
-            else shield -= enemyDamage;
-            if (shield == 0)
+            else if (shield == 0)
             {
                 health -= enemyDamage;
+            }
+            else shield -= enemyDamage;
+
+            if (health <= 0)
+            {
+                health = 0;
+                playerDied = true;
             }
         }
 
@@ -104,41 +122,43 @@ namespace ForestOfElves
         {
             enemy.TakeDamage();
         }
-        public int UsePotAndHeal(int hp)
+        public void UsePotionAndHeal(int hpUP)
         {
+            int currentHealth = health;
             if (howManyPotions == 0)
             {
-                return hp;
+                return;
             }
             else
             {
-                howManyPotions--;
-                hp += usePot;
-                if (hp > 100)
+                if(health != Settings.playerHealth) howManyPotions--;
+                currentHealth += hpUP;
+                if (currentHealth > Settings.playerHealth)
                 {
-                    hp = 100;
+                    currentHealth = Settings.playerHealth;
                 }
-                return hp;
+                health = currentHealth;
             }
         }
-        public void UsePartsAndRepair(int sh)
+        public void UsePartsAndRepair(int shUP)
         {
+            int currentShields = shield;
             if (howManyShields == 0)
             {
                 return;
             }
             else
             {
-                howManyShields--;
-                sh += usePot;
-                if (sh > 50)
+                if (shield != Settings.playerShield) howManyShields--;
+                currentShields += shUP;
+                if (currentShields > Settings.playerShield)
                 {
-                    sh = 50;
+                    currentShields = Settings.playerShield;
                 }
-                return;
+                shield = currentShields;
             }
         }
-        public void Input()
+        public void SetTargetPositionOrUseItems()
         {
             if (input.UP)
             {
@@ -162,32 +182,20 @@ namespace ForestOfElves
             }
             if (input.USEPOT)
             {
-                UsePotAndHeal(health);
+                UsePotionAndHeal(usePot);
+                dx = 0;
+                dy = 0;
             }
             if (input.USEPART)
             {
-                UsePartsAndRepair(shield);
-            }
-            if (input.SPACE)
-            {
-                health = -20;
+                UsePartsAndRepair(usePart);
+                dx = 0;
+                dy = 0;
             }
             targetPosX = x + dx;
             targetPosY = y + dy;
         }
-        public void MovePlayer()
-        {
-            x = targetPosX;
-            y = targetPosY;
-        }
 
-        public bool PlayerDied()
-        {
-            if (health <= 0)
-            {
-                return true;
-            }
-            else return false;
-        }
+   
     }
 }

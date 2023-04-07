@@ -39,7 +39,7 @@ namespace ForestOfElves
             {
                 items.Add(new ShieldParts(player, renderer) { x = 77 + i, y= 35});
             }
-            //creating spread out batch of items in certain locations
+            //creating items in certain locations
             items.Add(new ShieldParts(player, renderer) { x = 12, y = 6 });
             items.Add(new HealthPotions(player, renderer) { x = 12 , y = 7 });
             //creating specific key parts

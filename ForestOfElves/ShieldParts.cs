@@ -13,7 +13,7 @@ namespace ForestOfElves
         public ShieldParts(Player player, Renderer renderer) : base(player, renderer)
         {
             this.player = player;
-            sprite = "S";
+            sprite = Settings.shieldSprite;
         }
 
         public override void Update()
@@ -23,10 +23,6 @@ namespace ForestOfElves
                 return;
             }
             else IsTaken();
-        }
-        public override void Draw()
-        {
-            WhereIs(x, y, sprite);
         }
         public override void IsTaken()
         {

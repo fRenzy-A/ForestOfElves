@@ -13,6 +13,7 @@ namespace ForestOfElves
         static GameManager gameManager;
         static UserInput input;
         static bool startGame = false;
+        static bool gameWon = false;
         static Program()
         {
             input = new UserInput();
@@ -20,6 +21,7 @@ namespace ForestOfElves
         }
         static void Main(string[] args)
         {
+            Console.CursorVisible = false;
             while (true)
             {
                 Menu();
@@ -30,9 +32,18 @@ namespace ForestOfElves
                     {
                         startGame = false;
                     }
+                    if (gameManager.playerBeatBoss)
+                    {
+                        gameWon = true;
+                        startGame = false;
+                    }
                 }
                 Console.Clear();
-                GameOver();
+                if (gameWon)
+                {
+                    GameWin();
+                }
+                else GameOver();
                 Console.Clear();
             }
             
@@ -57,6 +68,16 @@ namespace ForestOfElves
             if (input.ENTER)
             {
                 startGame= true;
+            }
+        }
+
+        static void GameWin()
+        {
+            Console.WriteLine("You Win");
+            input.Input();
+            if (input.ENTER)
+            {
+                startGame = true;
             }
         }
         

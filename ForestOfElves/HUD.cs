@@ -9,7 +9,6 @@ namespace ForestOfElves
     internal class HUD
     {
         Player player;
-        Enemy enemy;
         Map map;
 
 
@@ -20,7 +19,7 @@ namespace ForestOfElves
             this.player = player;
             this.map = map;
         }
-        public void MainHUD()
+        public void ShowHUD()
         {
             
 
@@ -36,12 +35,10 @@ namespace ForestOfElves
             Console.WriteLine("WASD TO MOVE. GET ALL KEY PARTS[<] TO UNLOCK DOOR[Brown] AND BEAT THE BOSS");
             if (player.keyParts == 1)
             {
-                //Console.SetCursorPosition(0,Console.CursorTop);
                 Console.Write("|^| Half Key             ");
             }
             if (player.keyParts == 2)
             {
-                //Console.SetCursorPosition(0, Console.CursorTop);
                 Console.Write("|K| Key             ");
             }
             if (player.keyParts == 0)

@@ -86,17 +86,6 @@ namespace ForestOfElves
             }
             return false;
         }
-        public bool IsFellowEnemyAt(int fellowX, int fellowY) // making sure no enemies bump into each other ****UNUSED****
-        {
-            foreach (Enemy enemy in enemies)
-            {
-                if (fellowX == enemy.x && fellowY == enemy.y)
-                {
-                    return true;
-                }
-            }
-            return false;
-        }
 
         public Enemy GetEnemyAt(int playerX, int playerY)
         {

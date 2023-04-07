@@ -29,8 +29,6 @@ namespace ForestOfElves
         public void WhereIs(int x, int y, string character)
         {
             renderer.RenderGame(character, x, y);
-            /*sprite = character;
-            renderer.drawData[y][x] = sprite;*/
         }
     }
 }

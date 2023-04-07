@@ -17,18 +17,16 @@ namespace ForestOfElves
             this.map = map;
             this.random = random;
             this.player = player;
-            UserInput input = new UserInput();
         }
         public override void OnStart()
         {
             bossIsDead = false;
-            health = 500;
-            sprite = "B";
+            health = Settings.BOSSHealth;
+            sprite = Settings.BOSSSprite;
             decay = 5;
-            howManyPlyrMoves = 0; // how many player moves until it can do an action
             amountLeft = howManyPlyrMoves;
 
-            currentEnemyDamage = 100;
+            currentEnemyDamage = Settings.BOSSDamage;
         }
         public override void Update()
         {
@@ -46,7 +44,7 @@ namespace ForestOfElves
             }
             else
             {
-                GoingTo();
+                SetTargetPosition();
 
                 if (player.IsPlayerAt(targetPosX, targetPosY))
                 {
@@ -56,61 +54,18 @@ namespace ForestOfElves
             }
 
         }
-        public override void Draw()
-        {
-            WhereIs(x, y, sprite);
-        }
-        public override void GoingTo()
-        {
 
-            int move = random.Next(1, 5);
-            if (move == 1)
-            {
-                dx = 0;
-                dy = -1;
-                //ndy = y - 1; 
-            }
-            if (move == 2)
-            {
-                dx = -1;
-                dy = 0;
-                //ndx = x - 1;
-            }
-            if (move == 3)
-            {
-                dx = 0;
-                dy = 1;
-                //dy = y + 1;
-            }
-            if (move == 4)
-            {
-                dx = 1;
-                dy = 0;
-                //dx = x + 1;
-            }
-            targetPosX = x + dx;
-            targetPosY = y + dy;
-        }
-        public override void Move()
-        {
-            x = targetPosX;
-            y = targetPosY;
-        }
         public override void TakeDamage()
         {
             health -= player.currentplayerDamage;
 
             if (health <= 0)
             {
-                sprite = "k";
+                sprite = Settings.DEADSprite;
+                player.killedBoss = true;
                 dead = true;
-                bossIsDead = true;
             }
             return;
-        }
-        public override void Attacking()
-        {
-            player.TakeDamage(currentEnemyDamage);
         }
     }
 }

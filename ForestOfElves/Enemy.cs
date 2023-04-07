@@ -31,6 +31,8 @@ namespace ForestOfElves
         public Enemy(Map map, Random random, Player player, Renderer renderer) : base (renderer)// constructor
         {
             this.map = map;
+            this.player = player;
+            this.random = random;
         }
         public virtual void OnStart()
         {
@@ -38,28 +40,89 @@ namespace ForestOfElves
         }
         public virtual void Update()
         {
-            
+            attacked = false;
+            amountLeft -= 1;
+            if (dead)
+            {
+                decay--;
+                if (decay == 0)
+                {
+                    sprite = "";
+                    return;
+                }
+            }
+            else
+            {
+                if (amountLeft == 0)
+                {
+                    SetTargetPosition();
+
+                    if (player.IsPlayerAt(targetPosX, targetPosY))
+                    {
+                        Attacking();
+                    }
+                    else
+                    {
+                        x = targetPosX;
+                        y = targetPosY;
+
+                        if (map.IsWallAt(x, y)) // checks for walls. reverts the enemy position when its on top of a wall
+                        {
+                            x = targetPosX - dx;
+                            y = targetPosY - dy;
+                        }
+                    }
+                    amountLeft = howManyPlyrMoves;
+                }
+            }
         }
-        public virtual void Draw()
+        public void Draw()
         {
+            WhereIs(x, y, sprite);
         }
-        public virtual void GoingTo() //Where does it want to move
+        public void SetTargetPosition() //Where does it want to move
         {
-        }
-        public virtual void Move() // Moving to where it wants to move
-        {
+            int move = random.Next(1, 5);
+            if (move == 1)
+            {
+                dx = 0;
+                dy = -1;
+            }
+            if (move == 2)
+            {
+                dx = -1;
+                dy = 0;
+            }
+            if (move == 3)
+            {
+                dx = 0;
+                dy = 1;
+            }
+            if (move == 4)
+            {
+                dx = 1;
+                dy = 0;
+            }
+            targetPosX = x + dx;
+            targetPosY = y + dy;
         }
 
         public virtual void TakeDamage()
-        {           
+        {
+            health -= player.currentplayerDamage;
 
+            if (health <= 0)
+            {
+                sprite = Settings.DEADSprite;
+                dead = true;
+            }
+            return;
         } 
         public virtual void Attacking()
         {
+            player.TakeDamage(currentEnemyDamage);
         }
         
-        public virtual void IsPlayerNear()
-        {
-        }
+
     }
 }
